@@ -1,0 +1,29 @@
+// Loops in DesiLang
+shuru
+
+// For loop
+dikhao "Counting from 1 to 5:"
+chalao i se 1 tak 6 {
+    dikhao i
+}
+
+// While loop
+dikhao "Countdown:"
+count = 5
+jabtak count > 0 {
+    dikhao count
+    count = count - 1
+} band
+
+dikhao "Liftoff!"
+
+// Nested loops - multiplication table
+dikhao "2x2 multiplication table:"
+chalao i se 1 tak 3 {
+    chalao j se 1 tak 3 {
+        result = i * j
+        dikhao result
+    }
+}
+
+khatam

@@ -1,0 +1,24 @@
+// Variables and basic operations
+shuru
+// Numbers
+x = 10
+y = 20
+sum = x + y
+dikhao sum
+
+// Strings
+naam = "Rajwant"
+greeting = "Hello, " + naam
+dikhao greeting
+
+// Booleans
+is_adult = sahi
+is_student = galat
+dikhao is_adult
+dikhao is_student
+
+// Lists
+numbers = [1, 2, 3, 4, 5]
+dikhao numbers
+dikhao numbers[0]
+khatam

@@ -1,0 +1,33 @@
+// String operations
+shuru
+
+// Basic strings
+first_name = "Amit"
+last_name = "Kumar"
+full_name = first_name + " " + last_name
+dikhao full_name
+
+// String functions
+message = "hello world"
+dikhao upper(message)
+dikhao lower("HELLO WORLD")
+
+// String length
+dikhao length(message)
+
+// String replacement
+text = "I love Python"
+new_text = replace(text, "Python", "DesiLang")
+dikhao new_text
+
+// String splitting
+sentence = "This is a test"
+words = split(sentence, " ")
+dikhao words
+dikhao length(words)
+
+// Joining strings
+joined = join(words, "-")
+dikhao joined
+
+khatam

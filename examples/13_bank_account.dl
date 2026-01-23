@@ -1,0 +1,120 @@
+// Example: Bank Account with OOP
+// Demonstrates practical OOP usage with encapsulation
+
+shuru
+
+class BankAccount {
+    vidhi __init__(account_number, holder_name, balance) {
+        yeh.account_number = account_number
+        yeh.holder_name = holder_name
+        yeh.balance = balance
+        yeh.transaction_count = 0
+    }
+    samapt
+    
+    vidhi deposit(amount) {
+        agar amount > 0 {
+            yeh.balance = yeh.balance + amount
+            yeh.transaction_count = yeh.transaction_count + 1
+            dikhao "Deposited: "
+            dikhao amount
+            dikhao "\nNew Balance: "
+            dikhao yeh.balance
+            vapas sahi
+        }
+        bas
+        dikhao "Invalid deposit amount"
+        vapas galat
+    }
+    samapt
+    
+    vidhi withdraw(amount) {
+        agar amount > yeh.balance {
+            dikhao "Insufficient balance!"
+            vapas galat
+        }
+        bas
+        
+        agar amount > 0 {
+            yeh.balance = yeh.balance - amount
+            yeh.transaction_count = yeh.transaction_count + 1
+            dikhao "Withdrawn: "
+            dikhao amount
+            dikhao "\nNew Balance: "
+            dikhao yeh.balance
+            vapas sahi
+        }
+        bas
+        
+        dikhao "Invalid withdrawal amount"
+        vapas galat
+    }
+    samapt
+    
+    vidhi get_balance() {
+        vapas yeh.balance
+    }
+    samapt
+    
+    vidhi display_info() {
+        dikhao "=== Account Details ==="
+        dikhao "\nAccount Number: "
+        dikhao yeh.account_number
+        dikhao "\nHolder Name: "
+        dikhao yeh.holder_name
+        dikhao "\nBalance: Rs. "
+        dikhao yeh.balance
+        dikhao "\nTotal Transactions: "
+        dikhao yeh.transaction_count
+        dikhao "\n"
+    }
+    samapt
+}
+
+// Savings Account with interest
+class SavingsAccount badhaao BankAccount {
+    vidhi __init__(account_number, holder_name, balance, interest_rate) {
+        yeh.account_number = account_number
+        yeh.holder_name = holder_name
+        yeh.balance = balance
+        yeh.transaction_count = 0
+        yeh.interest_rate = interest_rate
+    }
+    samapt
+    
+    vidhi add_interest() {
+        interest = yeh.balance * yeh.interest_rate / 100
+        yeh.balance = yeh.balance + interest
+        dikhao "Interest added: Rs. "
+        dikhao interest
+        dikhao "\nNew Balance: Rs. "
+        dikhao yeh.balance
+    }
+    samapt
+}
+
+// Create accounts
+dikhao "Creating bank accounts...\n\n"
+
+acc1 = naya BankAccount("ACC001", "Rajesh Kumar", 5000)
+acc1.display_info()
+
+dikhao "\n--- Performing transactions ---\n"
+acc1.deposit(2000)
+dikhao "\n"
+acc1.withdraw(1500)
+dikhao "\n"
+acc1.withdraw(10000)  // Should fail
+
+dikhao "\n\n"
+acc1.display_info()
+
+// Savings account
+dikhao "\n\n=== Savings Account ===\n"
+savings = naya SavingsAccount("SAV001", "Priya Singh", 10000, 5)
+savings.display_info()
+
+dikhao "\nAdding interest...\n"
+savings.add_interest()
+
+khatam

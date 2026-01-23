@@ -1,0 +1,40 @@
+// Functions in DesiLang
+shuru
+
+// Simple function
+vidhi greet(name) {
+    message = "Namaste, " + name + "!"
+    dikhao message
+} samapt
+
+bulayo greet("Rajwant")
+bulayo greet("Priya")
+
+// Function with return value
+vidhi add(a, b) {
+    vapas a + b
+} samapt
+
+result = add(10, 20)
+dikhao result
+
+// Factorial function (recursive)
+vidhi factorial(n) {
+    agar n <= 1 {
+        vapas 1
+    } bas
+    vapas n * factorial(n - 1)
+} samapt
+
+dikhao factorial(5)
+dikhao factorial(10)
+
+// Function to check if number is even
+vidhi is_even(num) {
+    vapas num % 2 == 0
+} samapt
+
+dikhao is_even(4)
+dikhao is_even(7)
+
+khatam

@@ -1,0 +1,27 @@
+// Conditional statements
+shuru
+age = 25
+
+agar age >= 18 {
+    dikhao "You are an adult"
+} warna {
+    dikhao "You are a minor"
+} bas
+
+score = 85
+
+agar score >= 90 {
+    dikhao "Grade: A"
+} warna {
+    agar score >= 80 {
+        dikhao "Grade: B"
+    } warna {
+        agar score >= 70 {
+            dikhao "Grade: C"
+        } warna {
+            dikhao "Grade: D"
+        } bas
+    } bas
+} bas
+
+khatam

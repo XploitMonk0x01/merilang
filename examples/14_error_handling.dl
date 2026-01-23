@@ -1,0 +1,142 @@
+// Example: Basic Error Handling
+// Demonstrates try-catch-finally blocks and throwing exceptions
+
+shuru
+
+dikhao "=== Basic Try-Catch Example ===\n"
+
+// Simple try-catch
+koshish {
+    dikhao "Inside try block"
+    fenko "Something went wrong!"
+    dikhao "This won't execute"
+}
+pakdo error {
+    dikhao "Caught error: "
+    dikhao error
+}
+
+dikhao "\n\n=== Division by Zero Handling ===\n"
+
+// Handle division by zero
+koshish {
+    x = 10
+    y = 0
+    result = x / y
+    dikhao result
+}
+pakdo err {
+    dikhao "Error occurred: Cannot divide by zero"
+}
+
+dikhao "\n\n=== Try-Catch-Finally ===\n"
+
+// Finally block always executes
+count = 0
+
+koshish {
+    count = count + 1
+    dikhao "Try block executed"
+    fenko "Error in try"
+}
+pakdo e {
+    count = count + 1
+    dikhao "Catch block executed"
+}
+akhir {
+    count = count + 1
+    dikhao "Finally block executed"
+    dikhao "\nTotal steps: "
+    dikhao count
+}
+
+dikhao "\n\n=== Nested Try-Catch ===\n"
+
+koshish {
+    dikhao "Outer try"
+    
+    koshish {
+        dikhao "Inner try"
+        fenko "Inner error"
+    }
+    pakdo {
+        dikhao "Inner catch handled it"
+    }
+    
+    dikhao "After inner try-catch"
+    fenko "Outer error"
+}
+pakdo {
+    dikhao "Outer catch handled it"
+}
+
+dikhao "\n\n=== Validation Example ===\n"
+
+vidhi validate_age(age) {
+    agar age < 0 {
+        fenko "Age cannot be negative"
+    }
+    bas
+    
+    agar age > 150 {
+        fenko "Age is too high"
+    }
+    bas
+    
+    vapas sahi
+}
+samapt
+
+// Test validation
+koshish {
+    validate_age(25)
+    dikhao "Age 25 is valid"
+}
+pakdo err {
+    dikhao err
+}
+
+dikhao "\n"
+
+koshish {
+    validate_age(-5)
+    dikhao "This won't print"
+}
+pakdo err {
+    dikhao "Validation error: "
+    dikhao err
+}
+
+dikhao "\n"
+
+koshish {
+    validate_age(200)
+}
+pakdo err {
+    dikhao "Validation error: "
+    dikhao err
+}
+
+dikhao "\n\n=== Resource Cleanup Example ===\n"
+
+file_opened = galat
+
+koshish {
+    file_opened = sahi
+    dikhao "Opening file..."
+    
+    // Simulate file operation
+    fenko "File read error"
+}
+pakdo err {
+    dikhao "Error reading file: "
+    dikhao err
+}
+akhir {
+    agar file_opened {
+        dikhao "\nClosing file in finally block"
+    }
+    bas
+}
+
+khatam

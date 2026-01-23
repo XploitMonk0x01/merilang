@@ -1,0 +1,83 @@
+// Example: Inheritance and Super
+// Demonstrates class inheritance using 'badhaao' and super method calls
+
+shuru
+
+// Base class: Animal
+class Janwar {
+    vidhi __init__(naam, awaaz) {
+        yeh.naam = naam
+        yeh.awaaz = awaaz
+    }
+    samapt
+    
+    vidhi bolo() {
+        dikhao yeh.naam
+        dikhao " kehta hai: "
+        dikhao yeh.awaaz
+    }
+    samapt
+    
+    vidhi introduce() {
+        dikhao "Main ek janwar hoon"
+    }
+    samapt
+}
+
+// Dog class inherits from Animal
+class Kutta badhaao Janwar {
+    vidhi __init__(naam, breed) {
+        // Call parent constructor (simulated)
+        yeh.naam = naam
+        yeh.awaaz = "Bhow bhow!"
+        yeh.breed = breed
+    }
+    samapt
+    
+    vidhi introduce() {
+        // Call parent method
+        upar.introduce()
+        dikhao " aur main ek kutta hoon"
+    }
+    samapt
+    
+    vidhi show_breed() {
+        dikhao "Breed: "
+        dikhao yeh.breed
+    }
+    samapt
+}
+
+// Cat class inherits from Animal
+class Billi badhaao Janwar {
+    vidhi __init__(naam) {
+        yeh.naam = naam
+        yeh.awaaz = "Meow meow!"
+    }
+    samapt
+    
+    vidhi introduce() {
+        upar.introduce()
+        dikhao " aur main ek billi hoon"
+    }
+    samapt
+}
+
+// Create instances
+dog = naya Kutta("Tommy", "Labrador")
+cat = naya Billi("Pussy")
+
+// Test methods
+dikhao "=== Dog ==="
+dog.bolo()
+dikhao "\n"
+dog.introduce()
+dikhao "\n"
+dog.show_breed()
+
+dikhao "\n\n=== Cat ==="
+cat.bolo()
+dikhao "\n"
+cat.introduce()
+
+khatam

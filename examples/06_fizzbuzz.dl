@@ -1,0 +1,22 @@
+// FizzBuzz - classic programming challenge
+shuru
+
+dikhao "FizzBuzz from 1 to 30:"
+
+chalao i se 1 tak 31 {
+    agar i % 15 == 0 {
+        dikhao "FizzBuzz"
+    } warna {
+        agar i % 3 == 0 {
+            dikhao "Fizz"
+        } warna {
+            agar i % 5 == 0 {
+                dikhao "Buzz"
+            } warna {
+                dikhao i
+            } bas
+        } bas
+    } bas
+}
+
+khatam

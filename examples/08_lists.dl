@@ -1,0 +1,52 @@
+// List operations
+shuru
+
+// Create a list
+fruits = ["Apple", "Banana", "Cherry"]
+dikhao fruits
+
+// Access elements
+dikhao fruits[0]
+dikhao fruits[1]
+
+// Modify element
+fruits[1] = "Mango"
+dikhao fruits[1]
+
+// Add elements
+append(fruits, "Orange")
+append(fruits, "Grape")
+dikhao fruits
+
+// List length
+count = length(fruits)
+dikhao count
+
+// Iterate through list
+dikhao "All fruits:"
+chalao i se 0 tak length(fruits) {
+    dikhao fruits[i]
+}
+
+// Numbers list
+numbers = [5, 2, 8, 1, 9]
+dikhao "Original:"
+dikhao numbers
+
+// Sort
+sorted_nums = sort(numbers)
+dikhao "Sorted:"
+dikhao sorted_nums
+
+// Sum
+total = sum(numbers)
+dikhao "Sum:"
+dikhao total
+
+// Min and max
+dikhao "Min:"
+dikhao min(numbers)
+dikhao "Max:"
+dikhao max(numbers)
+
+khatam

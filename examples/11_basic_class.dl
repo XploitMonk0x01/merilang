@@ -1,0 +1,53 @@
+// Example: Basic Class Definition
+// Demonstrates creating a simple class with constructor and methods
+
+shuru
+
+// Define a Person class
+class Person {
+    // Constructor method
+    vidhi __init__(naam, umar) {
+        yeh.naam = naam
+        yeh.umar = umar
+    }
+    samapt
+    
+    // Method to display person details
+    vidhi dikhao_details() {
+        dikhao "Naam: "
+        dikhao yeh.naam
+        dikhao "Umar: "
+        dikhao yeh.umar
+    }
+    samapt
+    
+    // Method with return value
+    vidhi is_adult() {
+        agar yeh.umar >= 18 {
+            vapas sahi
+        }
+        bas
+        vapas galat
+    }
+    samapt
+}
+
+// Create instances
+p1 = naya Person("Rajesh", 25)
+p2 = naya Person("Priya", 16)
+
+// Call methods
+dikhao "Person 1:"
+p1.dikhao_details()
+
+dikhao "\nPerson 2:"
+p2.dikhao_details()
+
+// Check adult status
+dikhao "\nRajesh is adult:"
+dikhao p1.is_adult()
+
+dikhao "Priya is adult:"
+dikhao p2.is_adult()
+
+khatam

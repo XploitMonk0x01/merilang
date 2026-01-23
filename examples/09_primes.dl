@@ -1,0 +1,30 @@
+// Prime number finder
+shuru
+
+vidhi is_prime(n) {
+    agar n < 2 {
+        vapas galat
+    } bas
+    
+    agar n == 2 {
+        vapas sahi
+    } bas
+    
+    chalao i se 2 tak n {
+        agar n % i == 0 {
+            vapas galat
+        } bas
+    }
+    
+    vapas sahi
+} samapt
+
+dikhao "Prime numbers from 1 to 50:"
+
+chalao num se 1 tak 51 {
+    agar is_prime(num) {
+        dikhao num
+    } bas
+}
+
+khatam

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DesiLang Playground</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🇮🇳 DesiLang Playground</h1>
+        <p>Write and execute DesiLang code in your browser</p>
+      </header>
+
+      <div class="controls">
+        <button id="runBtn" class="btn btn-primary">▶ Run Code</button>
+        <button id="clearBtn" class="btn btn-secondary">🗑️ Clear</button>
+        <select id="examplesSelect" class="btn btn-secondary">
+          <option value="">📚 Load Example...</option>
+        </select>
+      </div>
+
+      <div class="editor-container">
+        <div class="editor-section">
+          <h3>Code Editor</h3>
+          <textarea
+            id="codeEditor"
+            placeholder='Write your DesiLang code here...
+shuru
+dikhao "Hello, World!"
+khatam'
+          ></textarea>
+        </div>
+
+        <div class="output-section">
+          <h3>Output</h3>
+          <div id="output" class="output-box">
+            <div class="placeholder">Output will appear here...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <h3>Quick Reference</h3>
+        <div class="keywords">
+          <div class="keyword-group">
+            <strong>Structure:</strong>
+            <code>shuru</code> (begin), <code>khatam</code> (end)
+          </div>
+          <div class="keyword-group">
+            <strong>I/O:</strong>
+            <code>dikhao</code> (print), <code>padho</code> (input)
+          </div>
+          <div class="keyword-group">
+            <strong>Control:</strong>
+            <code>agar</code> (if), <code>warna</code> (else),
+            <code>bas</code> (end if)
+          </div>
+          <div class="keyword-group">
+            <strong>Loops:</strong>
+            <code>jabtak</code> (while), <code>chalao...se...tak</code> (for)
+          </div>
+          <div class="keyword-group">
+            <strong>Functions:</strong>
+            <code>vidhi</code> (function), <code>vapas</code> (return),
+            <code>bulayo</code> (call)
+          </div>
+          <div class="keyword-group">
+            <strong>Booleans:</strong>
+            <code>sahi</code> (true), <code>galat</code> (false)
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          Made with ❤️ for the desi community |
+          <a href="https://github.com/XploitMonk0x01/desilang" target="_blank"
+            >GitHub</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const codeEditor = document.getElementById("codeEditor");
+      const outputDiv = document.getElementById("output");
+      const runBtn = document.getElementById("runBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const examplesSelect = document.getElementById("examplesSelect");
+
+      // Default code
+      const defaultCode = `shuru
+// Welcome to DesiLang!
+dikhao "Hello, World!"
+
+// Try some math
+x = 10
+y = 20
+dikhao x + y
+
+// Loop example
+chalao i se 1 tak 6 {
+    dikhao i
+}
+khatam`;
+
+      codeEditor.value = defaultCode;
+
+      // Load examples
+      fetch("/api/examples")
+        .then((response) => response.json())
+        .then((examples) => {
+          examples.forEach((example, index) => {
+            const option = document.createElement("option");
+            option.value = index;
+            option.textContent = example.name;
+            examplesSelect.appendChild(option);
+          });
+        });
+
+      // Handle example selection
+      examplesSelect.addEventListener("change", function () {
+        if (this.value !== "") {
+          fetch("/api/examples")
+            .then((response) => response.json())
+            .then((examples) => {
+              const example = examples[parseInt(this.value)];
+              codeEditor.value = example.code;
+              this.value = "";
+            });
+        }
+      });
+
+      // Run code
+      runBtn.addEventListener("click", async function () {
+        const code = codeEditor.value.trim();
+
+        if (!code) {
+          outputDiv.innerHTML =
+            '<div class="error">Please enter some code to run.</div>';
+          return;
+        }
+
+        // Show loading state
+        runBtn.disabled = true;
+        runBtn.textContent = "⏳ Running...";
+        outputDiv.innerHTML = '<div class="info">Executing code...</div>';
+
+        try {
+          const response = await fetch("/api/execute", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ code: code }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            outputDiv.innerHTML = `<div class="success">${escapeHtml(
+              result.output || "(no output)"
+            )}</div>`;
+          } else {
+            const errorMsg = result.error || "Unknown error";
+            outputDiv.innerHTML = `<div class="error">${escapeHtml(
+              errorMsg
+            )}</div>`;
+          }
+        } catch (error) {
+          outputDiv.innerHTML = `<div class="error">Network error: ${escapeHtml(
+            error.message
+          )}</div>`;
+        } finally {
+          runBtn.disabled = false;
+          runBtn.textContent = "▶ Run Code";
+        }
+      });
+
+      // Clear editor
+      clearBtn.addEventListener("click", function () {
+        if (confirm("Clear the editor?")) {
+          codeEditor.value = "";
+          outputDiv.innerHTML =
+            '<div class="placeholder">Output will appear here...</div>';
+        }
+      });
+
+      // Keyboard shortcut: Ctrl+Enter to run
+      codeEditor.addEventListener("keydown", function (e) {
+        if (e.ctrlKey && e.key === "Enter") {
+          e.preventDefault();
+          runBtn.click();
+        }
+      });
+
+      // Helper function to escape HTML
+      function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Tab key in textarea
+      codeEditor.addEventListener("keydown", function (e) {
+        if (e.key === "Tab") {
+          e.preventDefault();
+          const start = this.selectionStart;
+          const end = this.selectionEnd;
+          this.value =
+            this.value.substring(0, start) + "    " + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = start + 4;
+        }
+      });
+    </script>
+  </body>
+</html>

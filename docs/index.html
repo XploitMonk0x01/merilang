@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="DesiLang - A desi-inspired programming language with Hindi/Urdu keywords. Learn programming with familiar words!"
+    />
+    <meta
+      name="keywords"
+      content="DesiLang, Hindi programming, Urdu programming, Indian programming language, desi coding"
+    />
+    <title>DesiLang - Desi Programming Language</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <span class="logo">🇮🇳</span>
+          <span class="brand-name">DesiLang</span>
+        </div>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#docs">Documentation</a>
+          <a href="#examples">Examples</a>
+          <a href="#playground">Try Online</a>
+          <a
+            href="https://github.com/XploitMonk0x01/desilang"
+            target="_blank"
+            class="github-link"
+          >
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+              />
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Learn Programming in
+            <span class="gradient-text">Your Language</span>
+          </h1>
+          <p class="hero-subtitle">
+            DesiLang is a modern programming language with Hindi/Urdu keywords.
+            Write code that feels like home.
+          </p>
+          <div class="hero-buttons">
+            <a href="#playground" class="btn btn-primary">Try Online</a>
+            <a href="#docs" class="btn btn-secondary">Read Docs</a>
+          </div>
+          <div class="code-preview">
+            <div class="code-header">
+              <span class="file-name">hello.dl</span>
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <pre><code class="language-desilang">shuru
+
+class Person {
+    vidhi __init__(naam, umar) {
+        yeh.naam = naam
+        yeh.umar = umar
+    }
+    samapt
+    
+    vidhi greet() {
+        dikhao "Namaste, "
+        dikhao yeh.naam
+    }
+    samapt
+}
+
+person = naya Person("Rajesh", 25)
+person.greet()
+
+khatam</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+      <div class="container">
+        <h2 class="section-title">Why DesiLang?</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🌏</div>
+            <h3>Desi Keywords</h3>
+            <p>
+              Use familiar Hindi/Urdu words like <code>shuru</code>,
+              <code>agar</code>, <code>dikhao</code>
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Object-Oriented</h3>
+            <p>Full OOP support with classes, inheritance, and methods</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <h3>Error Handling</h3>
+            <p>Try-catch-finally blocks for robust error management</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Easy to Learn</h3>
+            <p>Simple syntax designed for beginners</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔧</div>
+            <h3>Full-Featured</h3>
+            <p>Variables, loops, functions, file I/O, and more</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💻</div>
+            <h3>Interactive REPL</h3>
+            <p>Test code snippets instantly in the terminal</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="quickstart">
+      <div class="container">
+        <h2 class="section-title">Get Started in 2 Minutes</h2>
+        <div class="quickstart-grid">
+          <div class="quickstart-step">
+            <div class="step-number">1</div>
+            <h3>Install</h3>
+            <pre><code>pip install desilang</code></pre>
+          </div>
+          <div class="quickstart-step">
+            <div class="step-number">2</div>
+            <h3>Create File</h3>
+            <pre><code>echo "shuru dikhao 'Namaste!' khatam" > hello.dl</code></pre>
+          </div>
+          <div class="quickstart-step">
+            <div class="step-number">3</div>
+            <h3>Run</h3>
+            <pre><code>python -m desilang run hello.dl</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section id="examples" class="examples">
+      <div class="container">
+        <h2 class="section-title">Code Examples</h2>
+        <div class="examples-tabs">
+          <button class="tab-btn active" data-tab="hello">Hello World</button>
+          <button class="tab-btn" data-tab="oop">OOP</button>
+          <button class="tab-btn" data-tab="errors">Error Handling</button>
+          <button class="tab-btn" data-tab="loops">Loops</button>
+        </div>
+        <div class="examples-content">
+          <div class="example-tab active" id="hello">
+            <pre><code class="language-desilang">shuru
+
+dikhao "Namaste, Duniya!"
+naam = "Rajesh"
+dikhao "Hello, " + naam
+
+khatam</code></pre>
+          </div>
+          <div class="example-tab" id="oop">
+            <pre><code class="language-desilang">shuru
+
+class BankAccount {
+    vidhi __init__(balance) {
+        yeh.balance = balance
+    }
+    samapt
+    
+    vidhi deposit(amount) {
+        yeh.balance = yeh.balance + amount
+        dikhao "Deposited: " + str(amount)
+    }
+    samapt
+    
+    vidhi withdraw(amount) {
+        agar amount > yeh.balance {
+            dikhao "Insufficient funds!"
+            vapas galat
+        }
+        bas
+        yeh.balance = yeh.balance - amount
+        vapas sahi
+    }
+    samapt
+}
+
+account = naya BankAccount(1000)
+account.deposit(500)
+account.withdraw(200)
+
+khatam</code></pre>
+          </div>
+          <div class="example-tab" id="errors">
+            <pre><code class="language-desilang">shuru
+
+koshish {
+    x = 10 / 0
+}
+pakdo err {
+    dikhao "Error occurred: " + err
+}
+akhir {
+    dikhao "Cleanup complete"
+}
+
+vidhi validate_age(age) {
+    agar age < 0 {
+        fenko "Age cannot be negative"
+    }
+    bas
+    vapas sahi
+}
+samapt
+
+koshish {
+    validate_age(-5)
+}
+pakdo error {
+    dikhao "Validation failed: " + error
+}
+
+khatam</code></pre>
+          </div>
+          <div class="example-tab" id="loops">
+            <pre><code class="language-desilang">shuru
+
+// For loop
+chalao i se 1 tak 10 {
+    dikhao i
+}
+
+// While loop
+count = 0
+jabtak count < 5 {
+    dikhao "Count: " + str(count)
+    count = count + 1
+}
+band
+
+// Lists
+numbers = [1, 2, 3, 4, 5]
+chalao num se 0 tak 4 {
+    dikhao numbers[num]
+}
+
+khatam</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Playground Section -->
+    <section id="playground" class="playground-section">
+      <div class="container">
+        <h2 class="section-title">Try DesiLang Online</h2>
+        <p class="section-subtitle">
+          Write and run DesiLang code right in your browser
+        </p>
+        <div class="playground-link">
+          <a
+            href="../playground/templates/index.html"
+            class="btn btn-primary btn-large"
+            >Open Playground →</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="docs" class="documentation">
+      <div class="container">
+        <h2 class="section-title">Documentation</h2>
+        <div class="docs-grid">
+          <a href="syntax.html" class="doc-card">
+            <h3>📖 Language Syntax</h3>
+            <p>Complete reference for all DesiLang syntax and features</p>
+          </a>
+          <a href="oop.html" class="doc-card">
+            <h3>🎯 OOP Guide</h3>
+            <p>
+              Learn about classes, inheritance, and object-oriented programming
+            </p>
+          </a>
+          <a href="installation.html" class="doc-card">
+            <h3>⚙️ Installation</h3>
+            <p>Setup instructions for all platforms</p>
+          </a>
+          <a href="tutorial.html" class="doc-card">
+            <h3>🚀 Quick Start</h3>
+            <p>Get started with DesiLang in minutes</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Keywords Reference -->
+    <section class="keywords">
+      <div class="container">
+        <h2 class="section-title">Keywords Quick Reference</h2>
+        <div class="keywords-grid">
+          <div class="keyword-group">
+            <h3>Program Structure</h3>
+            <table class="keyword-table">
+              <tr>
+                <td><code>shuru</code></td>
+                <td>Begin program</td>
+              </tr>
+              <tr>
+                <td><code>khatam</code></td>
+                <td>End program</td>
+              </tr>
+            </table>
+          </div>
+          <div class="keyword-group">
+            <h3>Control Flow</h3>
+            <table class="keyword-table">
+              <tr>
+                <td><code>agar</code></td>
+                <td>If</td>
+              </tr>
+              <tr>
+                <td><code>warna</code></td>
+                <td>Else</td>
+              </tr>
+              <tr>
+                <td><code>bas</code></td>
+                <td>End if</td>
+              </tr>
+              <tr>
+                <td><code>jabtak</code></td>
+                <td>While</td>
+              </tr>
+              <tr>
+                <td><code>chalao</code></td>
+                <td>For loop</td>
+              </tr>
+            </table>
+          </div>
+          <div class="keyword-group">
+            <h3>OOP</h3>
+            <table class="keyword-table">
+              <tr>
+                <td><code>class</code></td>
+                <td>Define class</td>
+              </tr>
+              <tr>
+                <td><code>naya</code></td>
+                <td>Create object</td>
+              </tr>
+              <tr>
+                <td><code>yeh</code></td>
+                <td>This/self</td>
+              </tr>
+              <tr>
+                <td><code>badhaao</code></td>
+                <td>Extends</td>
+              </tr>
+              <tr>
+                <td><code>upar</code></td>
+                <td>Super</td>
+              </tr>
+            </table>
+          </div>
+          <div class="keyword-group">
+            <h3>Error Handling</h3>
+            <table class="keyword-table">
+              <tr>
+                <td><code>koshish</code></td>
+                <td>Try</td>
+              </tr>
+              <tr>
+                <td><code>pakdo</code></td>
+                <td>Catch</td>
+              </tr>
+              <tr>
+                <td><code>fenko</code></td>
+                <td>Throw</td>
+              </tr>
+              <tr>
+                <td><code>akhir</code></td>
+                <td>Finally</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>DesiLang</h4>
+            <p>A modern programming language with desi keywords</p>
+            <div class="social-links">
+              <a
+                href="https://github.com/XploitMonk0x01/desilang"
+                target="_blank"
+                >GitHub</a
+              >
+              <a href="https://twitter.com/XploitMonk0x01" target="_blank"
+                >Twitter</a
+              >
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#docs">Documentation</a></li>
+              <li><a href="#examples">Examples</a></li>
+              <li><a href="#playground">Playground</a></li>
+              <li>
+                <a href="https://github.com/XploitMonk0x01/desilang/issues"
+                  >Report Issue</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Community</h4>
+            <ul>
+              <li>
+                <a href="https://github.com/XploitMonk0x01/desilang/discussions"
+                  >Discussions</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/XploitMonk0x01/desilang/blob/main/CONTRIBUTING.md"
+                  >Contributing</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/XploitMonk0x01/desilang/blob/main/LICENSE"
+                  >License</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 DesiLang. Licensed under MIT License.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

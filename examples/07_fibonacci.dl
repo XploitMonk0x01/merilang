@@ -1,0 +1,16 @@
+// Fibonacci sequence
+shuru
+
+vidhi fibonacci(n) {
+    agar n <= 1 {
+        vapas n
+    } bas
+    vapas fibonacci(n - 1) + fibonacci(n - 2)
+} samapt
+
+dikhao "First 15 Fibonacci numbers:"
+chalao i se 0 tak 15 {
+    dikhao fibonacci(i)
+}
+
+khatam
