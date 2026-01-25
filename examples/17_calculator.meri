@@ -1,0 +1,27 @@
+// Simple Calculator
+
+kaam add(a, b) {
+    wapas a + b
+}
+
+kaam subtract(a, b) {
+    wapas a - b
+}
+
+kaam multiply(a, b) {
+    wapas a * b
+}
+
+kaam divide(a, b) {
+    agar b == 0 {
+        fenko "Division by zero!"
+    }
+    wapas a / b
+}
+
+// Test calculations
+likho("Calculator Demo:")
+likho("10 + 5 =", add(10, 5))
+likho("10 - 5 =", subtract(10, 5))
+likho("10 * 5 =", multiply(10, 5))
+likho("10 / 5 =", divide(10, 5))

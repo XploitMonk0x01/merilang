@@ -1,0 +1,23 @@
+// Functions
+
+kaam greet(name) {
+    likho("Hello, " + name + "!")
+}
+
+kaam add(a, b) {
+    wapas a + b
+}
+
+kaam multiply(x, y) {
+    wapas x * y
+}
+
+// Call functions
+greet("Ahmed")
+greet("Sara")
+
+maan sum = add(5, 3)
+likho("5 + 3 =", sum)
+
+maan product = multiply(4, 7)
+likho("4 * 7 =", product)

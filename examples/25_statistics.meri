@@ -1,0 +1,38 @@
+// Statistical Functions
+
+kaam mean(numbers) {
+    wapas dashamlav(yog(numbers)) / dashamlav(lambai(numbers))
+}
+
+kaam median(numbers) {
+    maan n = lambai(numbers)
+    maan mid = n / 2
+    
+    agar n % 2 == 0 {
+        wapas (dashamlav(numbers[mid - 1]) + dashamlav(numbers[mid])) / 2.0
+    } warna {
+        wapas dashamlav(numbers[mid])
+    }
+}
+
+kaam variance(numbers) {
+    maan avg = mean(numbers)
+    maan sum_sq = 0.0
+    
+    bar_bar num in numbers {
+        maan diff = dashamlav(num) - avg
+        sum_sq = sum_sq + (diff * diff)
+    }
+    
+    wapas sum_sq / dashamlav(lambai(numbers))
+}
+
+// Test data
+maan data = [10, 20, 30, 40, 50]
+
+likho("Data:", data)
+likho("Mean:", mean(data))
+likho("Median:", median(data))
+likho("Min:", nyuntam(data))
+likho("Max:", adhiktam(data))
+likho("Variance:", variance(data))

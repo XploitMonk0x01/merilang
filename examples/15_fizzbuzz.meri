@@ -1,0 +1,15 @@
+// FizzBuzz
+
+likho("FizzBuzz from 1 to 30:")
+
+bar_bar i in disha(1, 31) {
+    agar i % 15 == 0 {
+        likho("FizzBuzz")
+    } agarlena i % 3 == 0 {
+        likho("Fizz")
+    } agarlena i % 5 == 0 {
+        likho("Buzz")
+    } warna {
+        likho(i)
+    }
+}

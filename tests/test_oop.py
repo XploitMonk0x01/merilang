@@ -4,9 +4,9 @@ Tests classes, objects, inheritance, methods, and properties.
 """
 
 import pytest
-from desilang.lexer import tokenize
-from desilang.parser import Parser
-from desilang.interpreter import Interpreter
+from merilang.lexer import tokenize
+from merilang.parser import Parser
+from merilang.interpreter import Interpreter
 
 
 def test_simple_class():

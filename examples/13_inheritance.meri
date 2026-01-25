@@ -1,0 +1,29 @@
+// Class Inheritance
+
+class Animal {
+    kaam __init__(name) {
+        yeh.name = name
+    }
+    
+    kaam speak() {
+        likho(yeh.name + " makes a sound")
+    }
+}
+
+class Dog badhaao Animal {
+    kaam speak() {
+        likho(yeh.name + " barks: Woof!")
+    }
+}
+
+class Cat badhaao Animal {
+    kaam speak() {
+        likho(yeh.name + " meows: Meow!")
+    }
+}
+
+maan dog = naya Dog("Buddy")
+maan cat = naya Cat("Whiskers")
+
+dog.speak()
+cat.speak()

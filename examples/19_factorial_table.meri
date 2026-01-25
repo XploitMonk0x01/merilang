@@ -1,0 +1,17 @@
+// Factorial Table
+
+kaam factorial(n) {
+    agar n <= 1 {
+        wapas 1
+    }
+    wapas n * factorial(n - 1)
+}
+
+likho("Factorial Table:")
+likho("N  | Factorial(N)")
+likho("---|-------------")
+
+bar_bar n in disha(1, 11) {
+    maan fact = factorial(n)
+    likho(shabd(n) + "  | " + shabd(fact))
+}

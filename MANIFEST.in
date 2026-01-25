@@ -5,9 +5,9 @@ include requirements-dev.txt
 include pyproject.toml
 include setup.py
 
-recursive-include desilang *.py
+recursive-include merilang *.py
 recursive-include tests *.py
-recursive-include examples *.desilang
+recursive-include examples *.meri
 recursive-include docs *.md
 recursive-include playground *.py *.html *.css
 

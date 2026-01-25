@@ -1,0 +1,25 @@
+// Prime Number Checker
+
+kaam is_prime(n) {
+    agar n < 2 {
+        wapas jhoot
+    }
+    
+    maan i = 2
+    jab_tak i < n {
+        agar n % i == 0 {
+            wapas jhoot
+        }
+        i = i + 1
+    }
+    
+    wapas sach
+}
+
+likho("Prime numbers up to 50:")
+
+bar_bar num in disha(2, 51) {
+    agar is_prime(num) {
+        likho(num)
+    }
+}

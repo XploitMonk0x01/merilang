@@ -1,0 +1,20 @@
+// Pattern Printing
+
+likho("Triangle Pattern:")
+bar_bar i in disha(1, 6) {
+    maan line = ""
+    bar_bar j in disha(i) {
+        line = line + "* "
+    }
+    likho(line)
+}
+
+likho("")
+likho("Number Pyramid:")
+bar_bar i in disha(1, 6) {
+    maan line = ""
+    bar_bar j in disha(1, i + 1) {
+        line = line + shabd(j) + " "
+    }
+    likho(line)
+}

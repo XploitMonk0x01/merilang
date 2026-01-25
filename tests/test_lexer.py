@@ -3,7 +3,7 @@ Unit tests for DesiLang lexer.
 """
 
 import pytest
-from desilang.lexer import tokenize, Token, TokenType, LexerError
+from merilang.lexer import tokenize, Token, TokenType, LexerError
 
 
 def test_tokenize_basic_program():

@@ -3,10 +3,10 @@ Unit tests for DesiLang parser.
 """
 
 import pytest
-from desilang.lexer import tokenize
-from desilang.parser import Parser
-from desilang.ast_nodes import *
-from desilang.errors import ParserError
+from merilang.lexer import tokenize
+from merilang.parser import Parser
+from merilang.ast_nodes import *
+from merilang.errors import ParserError
 
 
 def parse_code(code: str) -> ProgramNode:

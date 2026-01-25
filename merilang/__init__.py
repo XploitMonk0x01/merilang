@@ -12,6 +12,6 @@ __author__ = "DesiLang Community"
 from .lexer import tokenize, Token
 from .parser import Parser
 from .interpreter import Interpreter
-from .errors import DesiLangError
+from .errors import merilangError
 
 __all__ = ["tokenize", "Token", "Parser", "Interpreter", "DesiLangError"]

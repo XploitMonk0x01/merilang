@@ -1,0 +1,23 @@
+// Lists
+
+maan numbers = [1, 2, 3, 4, 5]
+likho("Original list:", numbers)
+
+// Accessing elements
+likho("First element:", numbers[0])
+likho("Third element:", numbers[2])
+
+// Modifying elements
+numbers[1] = 99
+likho("Modified list:", numbers)
+
+// List operations
+jodo(numbers, 6)
+likho("After append:", numbers)
+
+maan last = nikalo(numbers)
+likho("Popped:", last)
+likho("After pop:", numbers)
+
+// List length
+likho("Length:", lambai(numbers))

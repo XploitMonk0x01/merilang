@@ -1,0 +1,27 @@
+// Number Guessing Game (Simplified)
+
+kaam check_guess(secret, guess) {
+    agar guess == secret {
+        wapas "Correct!"
+    } agarlena guess < secret {
+        wapas "Too low!"
+    } warna {
+        wapas "Too high!"
+    }
+}
+
+// Simulate game with predefined guesses
+maan secret = 42
+maan guesses = [30, 50, 40, 45, 42]
+
+likho("Guessing the secret number...")
+
+bar_bar guess in guesses {
+    maan result = check_guess(secret, guess)
+    likho("Guess " + shabd(guess) + ": " + result)
+    
+    agar result == "Correct!" {
+        likho("You won!")
+        ruk
+    }
+}

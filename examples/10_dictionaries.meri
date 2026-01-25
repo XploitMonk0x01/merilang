@@ -1,0 +1,24 @@
+// Dictionaries
+
+maan person = {
+    "name": "Ahmed",
+    "age": 25,
+    "city": "Delhi"
+}
+
+likho("Person:", person)
+likho("Name:", person["name"])
+likho("Age:", person["age"])
+
+// Update dictionary
+person["age"] = 26
+person["job"] = "Engineer"
+
+likho("Updated:", person)
+
+// Dictionary functions
+maan keys = kunji(person)
+maan values = mul(person)
+
+likho("Keys:", keys)
+likho("Values:", values)

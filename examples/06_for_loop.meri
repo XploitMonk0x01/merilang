@@ -1,0 +1,14 @@
+// For Each Loops
+
+maan fruits = ["Apple", "Banana", "Mango", "Orange"]
+
+likho("Fruits:")
+bar_bar fruit in fruits {
+    likho("- " + fruit)
+}
+
+// Iterating over range
+likho("Numbers 1-5:")
+bar_bar num in disha(1, 6) {
+    likho(num)
+}

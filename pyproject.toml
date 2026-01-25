@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "desilang"
-version = "1.0.0"
-description = "A desi-inspired toy programming language interpreter"
+name = "merilang"
+version = "1.0.2"
+description = "A desi toy programming language built with Python"
 readme = "README.md"
 requires-python = ">=3.12"
 license = {text = "MIT"}
@@ -38,16 +38,17 @@ playground = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/desilang/desilang"
-Documentation = "https://github.com/desilang/desilang#readme"
-Repository = "https://github.com/desilang/desilang"
-"Bug Tracker" = "https://github.com/desilang/desilang/issues"
+Homepage = "https://github.com/XploitMonk0x01/merilang"
+Documentation = "https://github.com/XploitMonk0x01/merilang#readme"
+Repository = "https://github.com/XploitMonk0x01/merilang"
+"Bug Tracker" = "https://github.com/XploitMonk0x01/merilang/issues"
 
 [project.scripts]
-desilang = "desilang.cli:main"
+merilang = "merilang.cli:main"
+ml = "merilang.cli:main"
 
 [tool.setuptools]
-packages = ["desilang"]
+packages = ["merilang"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -57,7 +58,7 @@ python_functions = ["test_*"]
 addopts = "-v --strict-markers"
 
 [tool.coverage.run]
-source = ["desilang"]
+source = ["merilang"]
 omit = ["*/tests/*"]
 
 [tool.coverage.report]

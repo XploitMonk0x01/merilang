@@ -1,0 +1,23 @@
+// Recursive Functions
+
+kaam factorial(n) {
+    agar n <= 1 {
+        wapas 1
+    }
+    wapas n * factorial(n - 1)
+}
+
+kaam fibonacci(n) {
+    agar n <= 1 {
+        wapas n
+    }
+    wapas fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+likho("Factorial of 5:", factorial(5))
+likho("Factorial of 10:", factorial(10))
+
+likho("Fibonacci sequence:")
+bar_bar i in disha(10) {
+    likho(fibonacci(i))
+}

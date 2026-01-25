@@ -17,7 +17,7 @@ from . import __version__
 from .lexer import tokenize
 from .parser import Parser
 from .interpreter import Interpreter
-from .errors import DesiLangError
+from .errors import merilangError
 
 
 def print_error(error: DesiLangError) -> None:

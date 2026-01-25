@@ -1,0 +1,26 @@
+// If-Else Conditionals
+
+maan temperature = 35
+
+agar temperature > 30 {
+    likho("It's hot!")
+} agarlena temperature > 20 {
+    likho("It's warm")
+} agarlena temperature > 10 {
+    likho("It's cool")
+} warna {
+    likho("It's cold!")
+}
+
+// Grade calculator
+maan score = 85
+
+agar score >= 90 {
+    likho("Grade: A")
+} agarlena score >= 80 {
+    likho("Grade: B")
+} agarlena score >= 70 {
+    likho("Grade: C")
+} warna {
+    likho("Grade: F")
+}

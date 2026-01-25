@@ -1,0 +1,14 @@
+// Arithmetic Operations
+
+maan a = 10
+maan b = 3
+
+likho("Addition:", a + b)
+likho("Subtraction:", a - b)
+likho("Multiplication:", a * b)
+likho("Division:", a / b)
+likho("Modulo:", a % b)
+
+// Complex expressions
+maan result = (a + b) * 2 - 5
+likho("Complex:", result)

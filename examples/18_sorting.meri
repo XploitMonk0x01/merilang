@@ -1,0 +1,24 @@
+// Bubble Sort
+
+kaam bubble_sort(arr) {
+    maan n = lambai(arr)
+    
+    bar_bar i in disha(n) {
+        bar_bar j in disha(0, n - i - 1) {
+            agar arr[j] > arr[j + 1] {
+                // Swap
+                maan temp = arr[j]
+                arr[j] = arr[j + 1]
+                arr[j + 1] = temp
+            }
+        }
+    }
+    
+    wapas arr
+}
+
+maan numbers = [64, 34, 25, 12, 22, 11, 90]
+likho("Original:", numbers)
+
+maan sorted = bubble_sort(numbers)
+likho("Sorted:", sorted)

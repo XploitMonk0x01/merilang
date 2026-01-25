@@ -529,11 +529,11 @@ class SafeList {
 
 See the following example files for complete demonstrations:
 
-1. **`11_basic_class.dl`** - Basic class definition and usage
-2. **`12_inheritance.dl`** - Inheritance with `badhaao` and `upar`
-3. **`13_bank_account.dl`** - Real-world OOP example
-4. **`14_error_handling.dl`** - Try-catch-finally patterns
-5. **`15_complete_oop_errors.dl`** - Combined OOP and error handling
+1. **`11_basic_class.meri`** - Basic class definition and usage
+2. **`12_inheritance.meri`** - Inheritance with `badhaao` and `upar`
+3. **`13_bank_account.meri`** - Real-world OOP example
+4. **`14_error_handling.meri`** - Try-catch-finally patterns
+5. **`15_complete_oop_errors.meri`** - Combined OOP and error handling
 
 ---
 

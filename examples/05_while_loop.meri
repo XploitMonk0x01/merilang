@@ -1,0 +1,20 @@
+// While Loops
+
+maan count = 1
+
+likho("Counting to 5:")
+jab_tak count <= 5 {
+    likho(count)
+    count = count + 1
+}
+
+// Sum of numbers
+maan sum = 0
+maan i = 1
+
+jab_tak i <= 10 {
+    sum = sum + i
+    i = i + 1
+}
+
+likho("Sum of 1 to 10:", sum)

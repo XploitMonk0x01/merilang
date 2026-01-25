@@ -1,0 +1,40 @@
+// Bank Account System
+
+class BankAccount {
+    kaam __init__(owner, balance) {
+        yeh.owner = owner
+        yeh.balance = balance
+    }
+    
+    kaam deposit(amount) {
+        agar amount > 0 {
+            yeh.balance = yeh.balance + amount
+            likho("Deposited:", amount)
+            yeh.show_balance()
+        } warna {
+            likho("Invalid deposit amount")
+        }
+    }
+    
+    kaam withdraw(amount) {
+        agar amount > yeh.balance {
+            likho("Insufficient funds!")
+        } agarlena amount > 0 {
+            yeh.balance = yeh.balance - amount
+            likho("Withdrawn:", amount)
+            yeh.show_balance()
+        } warna {
+            likho("Invalid withdrawal amount")
+        }
+    }
+    
+    kaam show_balance() {
+        likho(yeh.owner + "'s balance:", yeh.balance)
+    }
+}
+
+maan account = naya BankAccount("Ahmed", 1000)
+account.show_balance()
+account.deposit(500)
+account.withdraw(200)
+account.withdraw(2000)

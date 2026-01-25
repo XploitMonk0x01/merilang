@@ -1,0 +1,17 @@
+// Lambda Functions
+
+maan double = lambada x: x * 2
+maan square = lambada x: x * x
+maan add = lambada a, b: a + b
+
+likho("double(5):", double(5))
+likho("square(7):", square(7))
+likho("add(3, 4):", add(3, 4))
+
+// Using with lists
+maan numbers = [1, 2, 3, 4, 5]
+
+likho("Squares:")
+bar_bar num in numbers {
+    likho(square(num))
+}

@@ -5,9 +5,9 @@ Integration tests for DesiLang - test complete programs.
 import pytest
 from io import StringIO
 import sys
-from desilang.lexer import tokenize
-from desilang.parser import Parser
-from desilang.interpreter import Interpreter
+from merilang.lexer import tokenize
+from merilang.parser import Parser
+from merilang.interpreter import Interpreter
 
 
 def run_program(code: str):

@@ -1,0 +1,21 @@
+// Object-Oriented Programming
+
+class Person {
+    kaam __init__(name, age) {
+        yeh.name = name
+        yeh.age = age
+    }
+    
+    kaam greet() {
+        likho("Hello, I'm " + yeh.name)
+    }
+    
+    kaam birthday() {
+        yeh.age = yeh.age + 1
+        likho(yeh.name + " is now " + shabd(yeh.age))
+    }
+}
+
+maan person = naya Person("Ahmed", 25)
+person.greet()
+person.birthday()

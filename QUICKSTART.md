@@ -6,7 +6,7 @@ Get up and running with DesiLang in 5 minutes!
 
 ```bash
 # Clone the repository
-git clone https://github.com/XploitMonk0x01/desilang.git
+git clone https://github.com/XploitMonk0x01/merilang.git
 cd desilang
 
 # Install
@@ -15,7 +15,7 @@ pip install -e .
 
 ## Step 2: Write Your First Program
 
-Create a file called `hello.dl`:
+Create a file called `hello.meri`:
 
 ```desilang
 shuru
@@ -26,7 +26,7 @@ khatam
 ## Step 3: Run It
 
 ```bash
-python -m desilang run hello.dl
+python -m desilang run hello.meri
 ```
 
 Output:
@@ -37,7 +37,7 @@ Hello, DesiLang!
 
 ## Step 4: Try Something More Interesting
 
-Create `calculator.dl`:
+Create `calculator.meri`:
 
 ```desilang
 shuru
@@ -55,7 +55,7 @@ khatam
 Run it:
 
 ```bash
-python -m desilang run calculator.dl
+python -m desilang run calculator.meri
 ```
 
 ## Step 5: Learn with Examples
@@ -64,16 +64,16 @@ Run the included examples:
 
 ```bash
 # Hello World
-python -m desilang run examples/01_hello_world.dl
+python -m desilang run examples/01_hello_world.meri
 
 # Loops
-python -m desilang run examples/04_loops.dl
+python -m desilang run examples/04_loops.meri
 
 # Functions
-python -m desilang run examples/05_functions.dl
+python -m desilang run examples/05_functions.meri
 
 # FizzBuzz
-python -m desilang run examples/06_fizzbuzz.dl
+python -m desilang run examples/06_fizzbuzz.meri
 ```
 
 ## Step 6: Try the REPL
@@ -95,7 +95,7 @@ Try typing:
 
 ## Step 7: Write a Real Program
 
-Let's create a number guessing game! Create `guess.dl`:
+Let's create a number guessing game! Create `guess.meri`:
 
 ```desilang
 shuru

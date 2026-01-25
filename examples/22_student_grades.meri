@@ -1,0 +1,49 @@
+// Student Grade Management
+
+class Student {
+    kaam __init__(name) {
+        yeh.name = name
+        yeh.scores = []
+    }
+    
+    kaam add_score(score) {
+        jodo(yeh.scores, score)
+    }
+    
+    kaam average() {
+        agar lambai(yeh.scores) == 0 {
+            wapas 0.0
+        }
+        wapas dashamlav(yog(yeh.scores)) / dashamlav(lambai(yeh.scores))
+    }
+    
+    kaam grade() {
+        maan avg = yeh.average()
+        
+        agar avg >= 90 {
+            wapas "A"
+        } agarlena avg >= 80 {
+            wapas "B"
+        } agarlena avg >= 70 {
+            wapas "C"
+        } agarlena avg >= 60 {
+            wapas "D"
+        } warna {
+            wapas "F"
+        }
+    }
+    
+    kaam display() {
+        likho("Student:", yeh.name)
+        likho("Scores:", yeh.scores)
+        likho("Average:", yeh.average())
+        likho("Grade:", yeh.grade())
+    }
+}
+
+maan student = naya Student("Ahmed")
+student.add_score(85)
+student.add_score(92)
+student.add_score(78)
+student.add_score(88)
+student.display()

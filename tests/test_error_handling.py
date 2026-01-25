@@ -4,10 +4,10 @@ Tests try-catch-finally blocks and throw statements.
 """
 
 import pytest
-from desilang.lexer import tokenize
-from desilang.parser import Parser
-from desilang.interpreter import Interpreter, DesiException
-from desilang.errors import DivisionByZeroError
+from merilang.lexer import tokenize
+from merilang.parser import Parser
+from merilang.interpreter import Interpreter, DesiException
+from merilang.errors import DivisionByZeroError
 
 
 def test_basic_try_catch():

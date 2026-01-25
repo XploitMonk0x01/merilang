@@ -5,10 +5,10 @@ Unit tests for DesiLang interpreter.
 import pytest
 from io import StringIO
 import sys
-from desilang.lexer import tokenize
-from desilang.parser import Parser
-from desilang.interpreter import Interpreter
-from desilang.errors import DivisionByZeroError, NameError as DesiNameError, TypeError as DesiTypeError
+from merilang.lexer import tokenize
+from merilang.parser import Parser
+from merilang.interpreter import Interpreter
+from merilang.errors import DivisionByZeroError, NameError as DesiNameError, TypeError as DesiTypeError
 
 
 def run_code(code: str, capture_output=True):

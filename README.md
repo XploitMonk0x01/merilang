@@ -1,14 +1,15 @@
-# DesiLang 🇮🇳
+# MeriLang 🇮🇳
 
-A desi-inspired toy programming language built with Python. Learn programming concepts with familiar Hindi/Urdu keywords!
+A desi toy programming language built with Python.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/desilang/desilang)
+[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)](https://github.com/XploitMonk0x01/merilang)
+[![PyPI](https://img.shields.io/pypi/v/merilang.svg)](https://pypi.org/project/merilang/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
 
 ## Features ✨
 
-- **Simple Syntax**: Easy-to-learn syntax with desi keywords
+- **Simple Syntax**: Easy-to-learn syntax with meri keywords
 - **Full Programming Language**: Variables, functions, loops, conditionals, and more
 - **Object-Oriented Programming**: Classes, inheritance, methods, and properties
 - **Error Handling**: Try-catch-finally blocks for robust error management
@@ -21,27 +22,27 @@ A desi-inspired toy programming language built with Python. Learn programming co
 
 ## Installation 📦
 
+### Using pip (Recommended)
+
+```bash
+pip install merilang
+```
+
 ### From Source
 
 ```bash
-git clone https://github.com/desilang/desilang.git
-cd desilang
+git clone https://github.com/XploitMonk0x01/merilang.git
+cd merilang
 pip install -e .
-```
-
-### Using pip (when published)
-
-```bash
-pip install desilang
 ```
 
 ## Quick Start 🚀
 
 ### Hello World
 
-Create a file `hello.dl`:
+Create a file `hello.meri`:
 
-```desilang
+```MeriLang
 shuru
 dikhao "Hello, World!"
 khatam
@@ -50,17 +51,21 @@ khatam
 Run it:
 
 ```bash
-python -m desilang run hello.dl
+merilang hello.meri
+# or
+ml hello.meri
 ```
 
 ### Interactive REPL
 
 ```bash
-python -m desilang repl
+merilang
+# or
+ml
 ```
 
 ```
-DesiLang v1.0.0 Interactive REPL
+MeriLang v1.0.1 Interactive REPL
 Type 'exit' or press Ctrl+C to quit
 
 >>> x = 42
@@ -74,9 +79,9 @@ Type 'exit' or press Ctrl+C to quit
 
 ### Program Structure
 
-Every DesiLang program starts with `shuru` (begin) and ends with `khatam` (end):
+Every MeriLang program starts with `shuru` (begin) and ends with `khatam` (end):
 
-```desilang
+```MeriLang
 shuru
 // Your code here
 khatam
@@ -84,13 +89,13 @@ khatam
 
 ### Comments
 
-```desilang
+```MeriLang
 // Single-line comments start with //
 ```
 
 ### Variables
 
-```desilang
+```MeriLang
 shuru
 x = 42              // Integer
 pi = 3.14           // Float
@@ -128,7 +133,7 @@ khatam
 
 ### Print Statement
 
-```desilang
+```MeriLang
 shuru
 dikhao "Hello"      // Print string
 dikhao 42           // Print number
@@ -139,7 +144,7 @@ khatam
 
 ### Input
 
-```desilang
+```MeriLang
 shuru
 dikhao "Enter your name:"
 padho naam
@@ -149,7 +154,7 @@ khatam
 
 ### Conditionals
 
-```desilang
+```MeriLang
 shuru
 age = 25
 
@@ -165,7 +170,7 @@ khatam
 
 **For Loop:**
 
-```desilang
+```MeriLang
 shuru
 chalao i se 0 tak 5 {
     dikhao i
@@ -175,7 +180,7 @@ khatam
 
 **While Loop:**
 
-```desilang
+```MeriLang
 shuru
 count = 0
 jabtak count < 5 {
@@ -187,7 +192,7 @@ khatam
 
 ### Functions
 
-```desilang
+```MeriLang
 shuru
 // Function definition
 vidhi add(a, b) {
@@ -205,7 +210,7 @@ khatam
 
 ### Lists
 
-```desilang
+```MeriLang
 shuru
 // Create list
 numbers = [1, 2, 3, 4, 5]
@@ -267,10 +272,10 @@ khatam
 
 ### File I/O
 
-```desilang
+```MeriLang
 shuru
 // Write to file
-likho "output.txt" "Hello, DesiLang!"
+likho "output.txt" "Hello, MeriLang!"
 
 // Read from file
 content = padho_file("output.txt")
@@ -280,15 +285,15 @@ khatam
 
 ### Importing Modules
 
-```desilang
-// mylib.dl
+```MeriLang
+// mylib.meri
 shuru
 vidhi helper_function(x) {
     vapas x * 2
 } samapt
 khatam
 
-// main.dl
+// main.meri
 shuru
 lao "mylib"
 result = helper_function(21)
@@ -298,7 +303,7 @@ khatam
 
 ### Object-Oriented Programming
 
-```desilang
+```MeriLang
 shuru
 
 // Define a class
@@ -348,7 +353,7 @@ khatam
 
 ### Error Handling
 
-```desilang
+```MeriLang
 shuru
 
 // Try-catch-finally
@@ -390,43 +395,44 @@ See the [examples](examples/) directory for complete programs:
 
 ### Basic Examples
 
-1. [Hello World](examples/01_hello_world.dl)
-2. [Variables](examples/02_variables.dl)
-3. [Conditionals](examples/03_conditionals.dl)
-4. [Loops](examples/04_loops.dl)
-5. [Functions](examples/05_functions.dl)
-6. [FizzBuzz](examples/06_fizzbuzz.dl)
-7. [Fibonacci](examples/07_fibonacci.dl)
-8. [Lists](examples/08_lists.dl)
-9. [Prime Numbers](examples/09_primes.dl)
-10. [String Operations](examples/10_strings.dl)
+1. [Hello World](examples/01_hello_world.meri)
+2. [Variables](examples/02_variables.meri)
+3. [Conditionals](examples/03_conditionals.meri)
+4. [Loops](examples/04_loops.meri)
+5. [Functions](examples/05_functions.meri)
+6. [FizzBuzz](examples/06_fizzbuzz.meri)
+7. [Fibonacci](examples/07_fibonacci.meri)
+8. [Lists](examples/08_lists.meri)
+9. [Prime Numbers](examples/09_primes.meri)
+10. [String Operations](examples/10_strings.meri)
 
 ### Advanced Examples (OOP & Error Handling)
 
-11. [Basic Class](examples/11_basic_class.dl) - Class definition and objects
-12. [Inheritance](examples/12_inheritance.dl) - Class inheritance with `badhaao`
-13. [Bank Account](examples/13_bank_account.dl) - Real-world OOP example
-14. [Error Handling](examples/14_error_handling.dl) - Try-catch-finally patterns
-15. [Complete OOP + Errors](examples/15_complete_oop_errors.dl) - Advanced combination
+11. [Basic Class](examples/11_basic_class.meri) - Class definition and objects
+12. [Inheritance](examples/12_inheritance.meri) - Class inheritance with `badhaao`
+13. [Bank Account](examples/13_bank_account.meri) - Real-world OOP example
+14. [Error Handling](examples/14_error_handling.meri) - Try-catch-finally patterns
+15. [Complete OOP + Errors](examples/15_complete_oop_errors.meri) - Advanced combination
 
 ## CLI Usage 💻
 
 ```bash
 # Run a script
-python -m desilang run script.dl
+merilang script.meri
+# or use short alias
+ml script.meri
 
-# Run with debug output
-python -m desilang run script.dl --debug
-
-# Start REPL
-python -m desilang repl
+# Start REPL (interactive mode)
+merilang
+ml
 
 # Show version
-python -m desilang version
-python -m desilang --version
+merilang --version
+ml --version
 
 # Show help
-python -m desilang --help
+merilang --help
+ml --help
 ```
 
 ## Development 🛠️
@@ -441,7 +447,7 @@ pip install pytest
 pytest tests/
 
 # Run with coverage
-pytest tests/ --cov=desilang --cov-report=html
+pytest tests/ --cov=MeriLang --cov-report=html
 
 # Run specific test file
 pytest tests/test_lexer.py -v
@@ -450,30 +456,34 @@ pytest tests/test_lexer.py -v
 ### Project Structure
 
 ```
-desilang/
-├── desilang/           # Main package
+merilang/
+├── merilang/              # Main package
 │   ├── __init__.py
-│   ├── __main__.py    # CLI entry point
-│   ├── lexer.py       # Tokenizer
-│   ├── parser.py      # Parser
-│   ├── ast_nodes.py   # AST node definitions
-│   ├── interpreter.py # Interpreter
-│   ├── builtins.py    # Built-in functions
-│   ├── errors.py      # Error classes
-│   └── cli.py         # Command-line interface
-├── tests/             # Test suite
-│   ├── test_lexer.py
-│   ├── test_parser.py
-│   ├── test_interpreter.py
+│   ├── lexer_enhanced.py  # Tokenizer
+│   ├── parser_enhanced.py # Parser
+│   ├── ast_nodes_enhanced.py # AST node definitions
+│   ├── interpreter_enhanced.py # Interpreter
+│   ├── environment.py     # Environment management
+│   ├── errors_enhanced.py # Error classes
+│   └── cli.py            # Command-line interface
+├── tests/                # Comprehensive test suite (172+ tests)
+│   ├── test_lexer_enhanced.py
+│   ├── test_parser_enhanced.py
+│   ├── test_interpreter_enhanced.py
+│   ├── test_oop.py
+│   ├── test_error_handling.py
 │   └── test_integration.py
-├── examples/          # Example programs
-├── playground/        # Web playground
-└── docs/             # Documentation
+├── examples/             # 25+ example programs (.meri files)
+├── benchmarks/           # Performance benchmarks
+├── docs/                # Documentation
+│   ├── TUTORIAL.md      # Comprehensive tutorial
+│   └── API.md           # API documentation
+└── pyproject.toml       # Package configuration
 ```
 
 ## Keyword Reference 🔤
 
-| English      | DesiLang  | Usage                  |
+| English      | MeriLang  | Usage                  |
 | ------------ | --------- | ---------------------- |
 | Begin        | `shuru`   | Program start          |
 | End          | `khatam`  | Program end            |
@@ -507,17 +517,19 @@ desilang/
 
 ## Error Handling 🚨
 
-DesiLang provides helpful error messages with line numbers:
+MeriLang provides helpful error messages with line numbers:
 
 ```
+
 Line 5, Column 12: Undefined variable: 'xyz'
 Line 8: Division by zero
 Line 12: Expected '=' after identifier
+
 ```
 
 You can also handle errors gracefully with try-catch:
 
-```desilang
+```MeriLang
 koshish {
     risky_operation()
 }
@@ -529,13 +541,14 @@ pakdo err {
 
 ## Documentation 📖
 
+🌐 **[Official Documentation Website](https://xploitmonk0x01.github.io/merilang/)**
+
 For comprehensive guides, see:
 
-- **[SYNTAX.md](docs/SYNTAX.md)** - Complete language syntax reference
-- **[INSTALL.md](docs/INSTALL.md)** - Installation and setup guide
-- **[OOP_AND_ERROR_HANDLING.md](docs/OOP_AND_ERROR_HANDLING.md)** - OOP and error handling guide
-- **[QUICKSTART.md](QUICKSTART.md)** - Quick start tutorial
-- **[REFERENCE_CARD.md](REFERENCE_CARD.md)** - Quick reference card
+- **[TUTORIAL.md](docs/TUTORIAL.md)** - Complete beginner-friendly tutorial
+- **[API.md](docs/API.md)** - API documentation and advanced features
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
 
 ## Contributing 🤝
 
@@ -563,12 +576,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [x] Comprehensive test suite
 - [x] CLI and REPL
 - [x] Web playground
+- [x] Documentation website
 - [ ] Package manager
 - [ ] Debugger with breakpoints
 - [ ] Standard library expansion
 - [ ] IDE extensions (VS Code, etc.)
 - [ ] Compiled mode (faster execution)
-- [ ] Documentation website
 
 ## Credits 💖
 
@@ -576,8 +589,8 @@ Inspired by educational programming languages and the need for culturally releva
 
 ## Support ⭐
 
-If you like DesiLang, please give it a star on GitHub!
+If you like MeriLang, please give it a star on GitHub!
 
 ---
 
-Made with ❤️ for the desi community
+Made with ❤️ for the meri community
