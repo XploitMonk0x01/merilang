@@ -1,5 +1,5 @@
 """
-Unit tests for OOP features in DesiLang.
+Unit tests for OOP features in MeriLang.
 Tests classes, objects, inheritance, methods, and properties.
 """
 

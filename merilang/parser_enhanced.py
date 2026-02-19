@@ -1,5 +1,5 @@
 """
-Enhanced Parser for DesiLang Phase 2.
+Enhanced Parser for MeriLang Phase 2.
 
 Production-ready recursive descent parser with:
 - Comprehensive type hints (mypy strict compliance)
@@ -12,7 +12,7 @@ Production-ready recursive descent parser with:
 - Lambda functions
 - Dictionary literals
 
-Author: DesiLang Team
+Author: MeriLang Team
 Version: 2.0 - Phase 2
 """
 
@@ -20,7 +20,7 @@ from typing import List, Optional, Union, Set
 from dataclasses import dataclass
 
 from merilang.lexer_enhanced import Token, TokenType, Lexer
-from merilang.errors_enhanced import ParserError, ErrorLanguage
+from merilang.errors_enhanced import ParserError, ParserErrorCollection, ErrorLanguage
 from merilang.ast_nodes_enhanced import (
     ASTNode, ProgramNode, NumberNode, StringNode, BooleanNode,
     ListNode, DictNode, VariableNode, AssignmentNode,
@@ -36,7 +36,7 @@ from merilang.ast_nodes_enhanced import (
 
 class Parser:
     """
-    Recursive descent parser for DesiLang.
+    Recursive descent parser for MeriLang.
     
     Parses tokens from the lexer and constructs an Abstract Syntax Tree (AST).
     Implements operator precedence and proper error recovery.
@@ -92,16 +92,26 @@ class Parser:
         self.current_index: int = 0
         self.current_token: Token = tokens[0] if tokens else Token(TokenType.EOF, "", 1, 1)
         self.error_language: ErrorLanguage = error_language
+        # Panic-mode: all syntax errors are collected here.
+        self.errors: List[ParserError] = []
+        self.had_error: bool = False
         
     def parse(self) -> ProgramNode:
         """
         Parse the token stream and return the AST root.
+
+        Uses panic-mode error recovery: when a ``ParserError`` is raised inside
+        ``parse_statement`` the parser records the error, calls
+        ``synchronize()`` to find the next safe boundary token, and resumes
+        parsing.  After the entire stream is consumed a
+        ``ParserErrorCollection`` is raised if any errors were collected, so
+        the caller sees *all* syntax problems at once.
         
         Returns:
             ProgramNode containing all top-level statements
             
         Raises:
-            ParserError: If syntax error is encountered
+            ParserErrorCollection: Aggregated collection of all parse errors.
             
         Examples:
             >>> parser = Parser(tokens)
@@ -110,12 +120,21 @@ class Parser:
             5
         """
         statements: List[ASTNode] = []
-        
+
         while not self.is_at_end():
-            stmt = self.parse_statement()
-            if stmt is not None:
-                statements.append(stmt)
-        
+            try:
+                stmt = self.parse_statement()
+                if stmt is not None:
+                    statements.append(stmt)
+            except ParserError as err:
+                # Panic-mode: record the error, synchronise to a safe boundary.
+                self.errors.append(err)
+                self.had_error = True
+                self.synchronize()
+
+        if self.had_error:
+            raise ParserErrorCollection(self.errors)
+
         return ProgramNode(statements=statements, line=1)
     
     # ========================================================================
@@ -224,10 +243,39 @@ class Parser:
             True
         """
         return self.current_token.type == TokenType.EOF
-    
-    # ========================================================================
-    # Statement Parsing
-    # ========================================================================
+
+    def synchronize(self) -> None:
+        """Panic-mode synchronisation: skip tokens until a safe boundary.
+
+        After recording a syntax error the parser needs to advance to a point
+        in the token stream where it can resume parsing cleanly.  Block-ending
+        tokens (``}`` , ``khatam``, ``EOF``) and block-starting keywords
+        (``kaam``, ``class``, ``agar``, ``jab_tak``, ``bar_bar``, ``koshish``)
+        are treated as synchronisation points.
+
+        This implements the standard panic-mode recovery strategy described in
+        the Dragon Book (Aho et al.).
+        """
+        SYNC_TOKENS = {
+            TokenType.RBRACE,
+            TokenType.END,
+            TokenType.FUNCTION,
+            TokenType.CLASS,
+            TokenType.IF,
+            TokenType.WHILE,
+            TokenType.FOR,
+            TokenType.TRY,
+            TokenType.EOF,
+        }
+        # Consume tokens until we hit a boundary or EOF.
+        while not self.is_at_end():
+            if self.current_token.type in SYNC_TOKENS:
+                # Consume the boundary token itself (e.g. the closing '}') so
+                # the next call to parse_statement starts on fresh ground.
+                if self.current_token.type not in (TokenType.EOF, TokenType.END):
+                    self.advance()
+                return
+            self.advance()
     
     def parse_statement(self) -> Optional[ASTNode]:
         """
@@ -1345,10 +1393,10 @@ class Parser:
             return ParenthesizedNode(expression=expr, line=line)
         
         raise ParserError.unexpected_token(
-            token=self.current_token.value,
+            expected="expression",
+            got=str(self.current_token.value),
             line=self.current_token.line,
             column=self.current_token.column,
-            language=self.error_language
         )
     
     def parse_list(self) -> ListNode:
@@ -1543,12 +1591,12 @@ class Parser:
         return SuperNode(method_name=method_name, arguments=arguments, line=line)
 
 
-def parse_desilang(code: str, error_language: ErrorLanguage = ErrorLanguage.ENGLISH) -> ProgramNode:
+def parse_MeriLang(code: str, error_language: ErrorLanguage = ErrorLanguage.ENGLISH) -> ProgramNode:
     """
-    Convenience function to tokenize and parse DesiLang code.
+    Convenience function to tokenize and parse MeriLang code.
     
     Args:
-        code: DesiLang source code
+        code: MeriLang source code
         error_language: Language for error messages
         
     Returns:
@@ -1559,7 +1607,7 @@ def parse_desilang(code: str, error_language: ErrorLanguage = ErrorLanguage.ENGL
         ParserError: If parsing fails
         
     Examples:
-        >>> ast = parse_desilang("maan x = 42\\nlikho(x)")
+        >>> ast = parse_MeriLang("maan x = 42\\nlikho(x)")
         >>> len(ast.statements)
         2
     """

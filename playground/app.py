@@ -1,6 +1,6 @@
 """
-Simple web playground for DesiLang using Flask.
-Allows users to write and execute DesiLang code in the browser.
+Simple web playground for MeriLang using Flask.
+Allows users to write and execute MeriLang code in the browser.
 """
 
 from flask import Flask, render_template, request, jsonify
@@ -27,7 +27,7 @@ def index():
 
 @app.route('/api/execute', methods=['POST'])
 def execute_code():
-    """Execute DesiLang code and return the result."""
+    """Execute MeriLang code and return the result."""
     try:
         data = request.get_json()
         code = data.get('code', '')
@@ -39,7 +39,7 @@ def execute_code():
             })
         
         # Create temporary file for the code
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.desilang', delete=False, encoding='utf-8') as f:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.MeriLang', delete=False, encoding='utf-8') as f:
             f.write(code)
             temp_file = f.name
         
@@ -47,7 +47,7 @@ def execute_code():
             # Execute the code in a subprocess with timeout
             # Use sys.executable to ensure we use the same Python interpreter
             result = subprocess.run(
-                [sys.executable, '-m', 'desilang', 'run', temp_file],
+                [sys.executable, '-m', 'MeriLang', 'run', temp_file],
                 capture_output=True,
                 text=True,
                 timeout=MAX_EXECUTION_TIME,
@@ -99,7 +99,7 @@ def get_examples():
             'name': 'Hello World',
             'code': '''shuru
 dikhao "Hello, World!"
-dikhao "Welcome to DesiLang!"
+dikhao "Welcome to MeriLang!"
 khatam'''
         },
         {
@@ -165,6 +165,6 @@ khatam'''
 
 
 if __name__ == '__main__':
-    print("Starting DesiLang Playground...")
+    print("Starting MeriLang Playground...")
     print("Open http://localhost:5000 in your browser")
     app.run(debug=True, host='0.0.0.0', port=5000)

@@ -1,11 +1,11 @@
 """
-Enhanced Lexer for DesiLang - Production version with regex optimization.
+Enhanced Lexer for MeriLang - Production version with regex optimization.
 
-This module provides tokenization functionality for DesiLang source code,
+This module provides tokenization functionality for MeriLang source code,
 converting text into a stream of tokens for the parser. Uses regex patterns
 for efficient scanning and supports Unicode characters for Hindi/Urdu text.
 
-Author: DesiLang Team
+Author: MeriLang Team
 Version: 2.0
 """
 
@@ -13,11 +13,11 @@ import re
 from typing import List, Optional, Tuple
 from enum import Enum, auto
 from dataclasses import dataclass
-from .errors import LexerError
+from .errors_enhanced import LexerError, LexerErrorCollection
 
 
 class TokenType(Enum):
-    """Enumeration of all token types in DesiLang.
+    """Enumeration of all token types in MeriLang.
     
     This enum defines every possible token type that the lexer can produce,
     organized by category for clarity.
@@ -192,7 +192,7 @@ KEYWORDS = {
 
 
 class Lexer:
-    """Enhanced lexer with regex-based tokenization for DesiLang.
+    """Enhanced lexer with regex-based tokenization for MeriLang.
     
     This lexer converts source code into tokens using efficient regex patterns.
     It handles Unicode characters for Hindi/Urdu text, string escapes, and
@@ -262,17 +262,35 @@ class Lexer:
         self.line = 1
         self.column = 1
         self.tokens: List[Token] = []
+        # Panic-mode: errors are collected here instead of being raised immediately.
+        self.errors: List[LexerError] = []
     
     def error(self, message: str) -> None:
-        """Raise a lexer error with current position.
-        
+        """Record a lexer error with current position.
+
+        In panic-mode the error is *appended* to ``self.errors`` so that
+        scanning can continue and we can surface all problems at once.
+
+        For hard errors (e.g. unterminated strings) you still *raise* directly
+        via ``LexerError`` — only unknown-character errors are collected.
+
         Args:
-            message: Error description
-            
-        Raises:
-            LexerError: Always raised with formatted message
+            message: Human-readable error description.
         """
         raise LexerError(message, self.line, self.column)
+
+    def _record_error(self, message: str) -> None:
+        """Collect a non-fatal lexer error and advance past the bad character.
+
+        This implements panic-mode recovery at the character level: the bad
+        character is logged and skipped so scanning can resume on the next
+        character.
+
+        Args:
+            message: Human-readable description of the problem.
+        """
+        self.errors.append(LexerError(message, self.line, self.column))
+        self.advance()  # skip the offending character
     
     def current_char(self) -> Optional[str]:
         """Get current character without advancing.
@@ -534,32 +552,46 @@ class Lexer:
                 self.tokens.append(self.read_identifier_or_keyword())
                 continue
             
-            # Operators and delimiters
-            if self.current_char():
+            # Operators and delimiters (only if char is a known operator char).
+            char = self.current_char()
+            is_known = (
+                char in self.SINGLE_CHAR_TOKENS or
+                self.code[self.pos:self.pos + 2] in self.TWO_CHAR_OPS
+            )
+            if is_known:
                 self.tokens.append(self.read_operator())
                 continue
-            
-            # Should not reach here
-            self.error(f"Unexpected character: '{self.current_char()}'")
-        
-        # Add EOF token
+
+            # Unknown character — panic-mode: log and skip instead of crashing.
+            self._record_error(f"Unexpected character: '{char}'")
+            continue
+
+        # Add EOF token.
         self.tokens.append(Token(TokenType.EOF, None, self.line, self.column))
-        
+
+        # If any errors were collected, raise them all together.
+        if self.errors:
+            raise LexerErrorCollection(self.errors)
+
         return self.tokens
 
 
 def tokenize(code: str) -> List[Token]:
-    """Convenience function to tokenize source code.
-    
+    """Tokenize source code, raising on the first collection of errors found.
+
+    This is the standard entry-point used by the parser.  If the source
+    contains any illegal characters a ``LexerErrorCollection`` is raised so
+    the caller receives *all* problems at once rather than just the first one.
+
     Args:
         code: Source code string
-        
+
     Returns:
-        List of tokens
-        
+        List of tokens (includes final EOF token)
+
     Raises:
-        LexerError: On tokenization error
-        
+        LexerErrorCollection: When one or more illegal characters are encountered.
+
     Example:
         >>> tokens = tokenize('maan x = 42')
         >>> print(tokens[0].type.name)
@@ -567,3 +599,35 @@ def tokenize(code: str) -> List[Token]:
     """
     lexer = Lexer(code)
     return lexer.tokenize()
+
+
+def tokenize_safe(code: str) -> tuple:
+    """Tokenize source code without raising, returning errors alongside tokens.
+
+    Designed for IDE integrations, REPL tooling, and the compiler pipeline
+    where partial token streams are still useful even when errors exist.
+
+    Args:
+        code: Source code string
+
+    Returns:
+        A ``(tokens, errors)`` tuple where
+          * ``tokens`` is the list produced so far (always has at least an EOF)
+          * ``errors`` is a (possibly empty) ``List[LexerError]``
+
+    Example:
+        >>> tokens, errors = tokenize_safe('maan x = 42 @@@')
+        >>> len(errors)
+        3
+        >>> errors[0].line
+        1
+    """
+    lexer = Lexer(code)
+    try:
+        tokens = lexer.tokenize()
+    except LexerErrorCollection:
+        # Ensure EOF is present even when errors occurred.
+        if not lexer.tokens or lexer.tokens[-1].type != TokenType.EOF:
+            lexer.tokens.append(Token(TokenType.EOF, None, lexer.line, lexer.column))
+        tokens = lexer.tokens
+    return tokens, lexer.errors

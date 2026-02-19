@@ -31,7 +31,7 @@ Examples of unacceptable behavior include:
 
 ## Language and Cultural Sensitivity
 
-As DesiLang serves the Hindustani-speaking community:
+As MeriLang serves the Hindustani-speaking community:
 
 - **Language Respect**: Respect both Hindi and Urdu equally
 - **Cultural Awareness**: Be aware of cultural sensitivities
@@ -55,7 +55,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at:
 
-- **Email**: conduct@desilang.org (if applicable)
+- **Email**: conduct@MeriLang.org (if applicable)
 - **GitHub**: [Report via private issue](https://github.com/XploitMonk0x01/merilang/issues)
 
 All complaints will be reviewed and investigated promptly and fairly.
@@ -100,11 +100,11 @@ Community Impact Guidelines were inspired by [Mozilla's code of conduct enforcem
 
 For answers to common questions about this code of conduct, see the FAQ at https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations.
 
-## DesiLang-Specific Guidelines
+## MeriLang-Specific Guidelines
 
 ### Language Considerations
 
-When contributing to DesiLang:
+When contributing to MeriLang:
 
 - **Bilingual Support**: Maintain quality in both English and Hindi/Urdu
 - **Keyword Respect**: Respect the choice of Hindustani keywords
@@ -122,4 +122,4 @@ When contributing to DesiLang:
 
 **Version**: 1.0  
 **Last Updated**: 2024  
-**Contact**: conduct@desilang.org (if applicable)
+**Contact**: conduct@MeriLang.org (if applicable)

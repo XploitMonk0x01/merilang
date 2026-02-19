@@ -1,10 +1,10 @@
 """
-Enhanced error handling for DesiLang with bilingual messages.
+Enhanced error handling for MeriLang with bilingual messages.
 
 This module provides custom exception classes with detailed error messages
 in both English and Hindi/Urdu, along with helpful suggestions for common mistakes.
 
-Author: DesiLang Team
+Author: MeriLang Team
 Version: 2.0
 """
 
@@ -23,8 +23,8 @@ class ErrorLanguage(Enum):
 ERROR_LANGUAGE = ErrorLanguage.BILINGUAL
 
 
-class DesiLangError(Exception):
-    """Base exception for all DesiLang errors.
+class MeriLangError(Exception):
+    """Base exception for all MeriLang errors.
     
     Provides formatted error messages with line/column information and
     optional suggestions in English and/or Hindi.
@@ -108,7 +108,7 @@ class DesiLangError(Exception):
         return ": ".join(parts) if len(parts) > 1 else parts[0] if parts else "Unknown error"
 
 
-class LexerError(DesiLangError):
+class LexerError(MeriLangError):
     """Error during tokenization/lexical analysis.
     
     Examples:
@@ -154,7 +154,7 @@ class LexerError(DesiLangError):
         )
 
 
-class ParserError(DesiLangError):
+class ParserError(MeriLangError):
     """Error during parsing/syntax analysis.
     
     Examples:
@@ -194,7 +194,7 @@ class ParserError(DesiLangError):
         )
 
 
-class RuntimeError(DesiLangError):
+class RuntimeError(MeriLangError):
     """Error during interpretation/execution.
     
     Examples:
@@ -394,3 +394,168 @@ def get_error_language() -> ErrorLanguage:
         Current ErrorLanguage setting
     """
     return ERROR_LANGUAGE
+
+
+# ============================================================================
+# Multi-Error Collection Classes  (for panic-mode pipelines)
+# ============================================================================
+
+class LexerErrorCollection(MeriLangError):
+    """Holds multiple LexerErrors collected during a resilient tokenisation pass.
+
+    Instead of aborting on the first bad character the lexer collects all
+    problems and surfaces them together so the developer can fix everything at
+    once.
+
+    Attributes:
+        errors: Ordered list of individual LexerError instances.
+    """
+
+    def __init__(self, errors: List['LexerError']) -> None:
+        self.errors = errors
+        lines = [str(e) for e in errors]
+        combined = "\n".join(lines)
+        super().__init__(
+            message_en=f"{len(errors)} lexer error(s) found:\n{combined}",
+            message_hi=f"लेक्सर में {len(errors)} त्रुटि(यां) मिलीं:\n{combined}",
+        )
+
+    def __len__(self) -> int:  # pragma: no cover
+        return len(self.errors)
+
+
+class ParserErrorCollection(MeriLangError):
+    """Holds multiple ParserErrors collected during a panic-mode parse pass.
+
+    The parser catches individual statement errors, recovers to a safe
+    synchronisation token, and continues parsing so all problems are visible
+    at once.
+
+    Attributes:
+        errors: Ordered list of individual ParserError instances.
+    """
+
+    def __init__(self, errors: List['ParserError']) -> None:
+        self.errors = errors
+        lines = [str(e) for e in errors]
+        combined = "\n".join(lines)
+        super().__init__(
+            message_en=f"{len(errors)} syntax error(s) found:\n{combined}",
+            message_hi=f"पार्सर में {len(errors)} वाक्य-रचना त्रुटि(यां) मिलीं:\n{combined}",
+        )
+
+    def __len__(self) -> int:  # pragma: no cover
+        return len(self.errors)
+
+
+# ============================================================================
+# Semantic-Analysis Errors  (raised before execution)
+# ============================================================================
+
+class SemanticError(MeriLangError):
+    """Base class for errors detected during static semantic analysis.
+
+    Semantic errors indicate logically invalid programs that are nonetheless
+    syntactically correct (e.g. using an undefined variable, or subtracting a
+    string from a number).
+    """
+    pass
+
+
+class TypeCheckError(SemanticError):
+    """Raised when a static type check fails.
+
+    Examples:
+        ``"hello" - 5``  → cannot subtract number from string
+        ``nahi 42``      → logical NOT applied to a number literal
+    """
+
+    @staticmethod
+    def invalid_operation(
+        op: str, left_type: str, right_type: str, line: Optional[int] = None
+    ) -> 'TypeCheckError':
+        """Factory for a binary-operation type mismatch."""
+        return TypeCheckError(
+            message_en=(
+                f"Type error: cannot apply '{op}' to '{left_type}' and '{right_type}'"
+            ),
+            message_hi=(
+                f"प्रकार त्रुटि: '{left_type}' और '{right_type}' पर '{op}' लागू नहीं किया जा सकता"
+            ),
+            line=line,
+            suggestion_en="Convert values to compatible types before this operation.",
+            suggestion_hi="इस ऑपरेशन से पहले मानों को संगत प्रकारों में बदलें।",
+        )
+
+    @staticmethod
+    def unary_invalid(
+        op: str, operand_type: str, line: Optional[int] = None
+    ) -> 'TypeCheckError':
+        """Factory for a unary-operation type mismatch."""
+        return TypeCheckError(
+            message_en=f"Type error: cannot apply unary '{op}' to '{operand_type}'",
+            message_hi=f"प्रकार त्रुटि: एकल '{op}' को '{operand_type}' पर लागू नहीं किया जा सकता",
+            line=line,
+        )
+
+
+class UndefinedNameError(SemanticError):
+    """Raised when a variable or function name is used before being defined.
+
+    Unlike the runtime ``NameError``, this is detected *statically* during the
+    semantic analysis pass.
+
+    Args:
+        name: The undefined identifier.
+        line: Source line where the identifier was encountered.
+        similar_names: Optional list of similar known names for suggestions.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        line: Optional[int] = None,
+        similar_names: Optional[List[str]] = None,
+    ) -> None:
+        suggestion_en: Optional[str] = None
+        suggestion_hi: Optional[str] = None
+        if similar_names:
+            joined = ", ".join(similar_names[:3])
+            suggestion_en = f"Did you mean: {joined}?"
+            suggestion_hi = f"क्या आपका मतलब था: {joined}?"
+
+        super().__init__(
+            message_en=f"Undefined name: '{name}'",
+            message_hi=f"अपरिभाषित नाम: '{name}'",
+            line=line,
+            suggestion_en=suggestion_en,
+            suggestion_hi=suggestion_hi,
+        )
+        self.name = name
+
+
+class RedefinitionError(SemanticError):
+    """Raised when a name is re-declared in the same scope.
+
+    Args:
+        name: The name being re-declared.
+        original_line: Line where it was first declared.
+        line: Line of the attempted re-declaration.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        original_line: Optional[int],
+        line: Optional[int] = None,
+    ) -> None:
+        orig = f"line {original_line}" if original_line is not None else "an earlier line"
+        super().__init__(
+            message_en=f"Name '{name}' is already defined (first declared at {orig})",
+            message_hi=f"नाम '{name}' पहले से परिभाषित है ({orig} पर पहली बार घोषित)",
+            line=line,
+            suggestion_en="Use a different name, or remove the duplicate declaration.",
+            suggestion_hi="एक अलग नाम उपयोग करें, या डुप्लिकेट घोषणा हटाएं।",
+        )
+        self.name = name
+

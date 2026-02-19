@@ -1,5 +1,5 @@
 """
-Enhanced Interpreter for DesiLang Phase 2.
+Enhanced Interpreter for MeriLang Phase 2.
 
 Production-ready AST visitor interpreter with:
 - Comprehensive type hints (mypy strict compliance)
@@ -11,7 +11,7 @@ Production-ready AST visitor interpreter with:
 - Dictionary operations
 - Improved error reporting with stack traces
 
-Author: DesiLang Team
+Author: MeriLang Team
 Version: 2.0 - Phase 2
 """
 
@@ -380,9 +380,9 @@ BUILTINS: Dict[str, Callable[..., Any]] = {
 
 class Interpreter:
     """
-    AST visitor interpreter for DesiLang.
+    AST visitor interpreter for MeriLang.
     
-    Executes DesiLang programs by traversing the AST and performing operations.
+    Executes MeriLang programs by traversing the AST and performing operations.
     Uses visitor pattern with proper lexical scoping via Environment class.
     
     Attributes:
@@ -393,8 +393,8 @@ class Interpreter:
         max_call_depth: Maximum recursion depth
         
     Examples:
-        >>> from merilang.parser_enhanced import parse_desilang
-        >>> ast = parse_desilang("maan x = 42\\nlikho(x)")
+        >>> from merilang.parser_enhanced import parse_MeriLang
+        >>> ast = parse_MeriLang("maan x = 42\\nlikho(x)")
         >>> interpreter = Interpreter()
         >>> interpreter.execute(ast)
         42
@@ -433,7 +433,7 @@ class Interpreter:
             program: Root AST node containing all statements
             
         Raises:
-            Various DesiLang exceptions for runtime errors
+            Various MeriLang exceptions for runtime errors
             
         Examples:
             >>> interpreter.execute(ast)
@@ -847,7 +847,7 @@ class Interpreter:
             try:
                 return func(*args)
             except (DesiTypeError, DesiIndexError, DesiRuntimeError):
-                raise  # Re-raise DesiLang exceptions
+                raise  # Re-raise MeriLang exceptions
             except Exception as e:
                 raise DesiRuntimeError(
                     message_en=f"Error in function '{node.name}': {str(e)}",
@@ -1333,8 +1333,8 @@ class Interpreter:
     # ========================================================================
     
     def visit_ImportNode(self, node: ImportNode) -> None:
-        """Import and execute another DesiLang file."""
-        from merilang.parser_enhanced import parse_desilang
+        """Import and execute another MeriLang file."""
+        from merilang.parser_enhanced import parse_MeriLang
         from merilang.errors_enhanced import LexerError, ParserError, FileIOError
         
         filename = node.module_name
@@ -1359,7 +1359,7 @@ class Interpreter:
         
         # Parse and execute imported file
         try:
-            imported_ast = parse_desilang(code, self.error_language)
+            imported_ast = parse_MeriLang(code, self.error_language)
             
             # Execute in current environment
             for stmt in imported_ast.statements:

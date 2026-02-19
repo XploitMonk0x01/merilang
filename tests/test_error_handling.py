@@ -1,5 +1,5 @@
 """
-Unit tests for error handling features in DesiLang.
+Unit tests for error handling features in MeriLang.
 Tests try-catch-finally blocks and throw statements.
 """
 

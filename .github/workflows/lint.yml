@@ -25,13 +25,13 @@ jobs:
 
       - name: Check formatting with Black
         run: |
-          black --check desilang tests
+          black --check MeriLang tests
 
       - name: Lint with Ruff
         run: |
-          ruff check desilang tests
+          ruff check MeriLang tests
 
       - name: Type check with mypy
         run: |
-          mypy desilang
+          mypy MeriLang
         continue-on-error: true

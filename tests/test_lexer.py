@@ -1,5 +1,5 @@
 """
-Unit tests for DesiLang lexer.
+Unit tests for MeriLang lexer.
 """
 
 import pytest

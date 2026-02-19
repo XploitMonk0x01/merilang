@@ -1,7 +1,7 @@
 """
 Tests for Environment class - lexical scoping system.
 
-Author: DesiLang Team
+Author: MeriLang Team
 Version: 2.0
 """
 

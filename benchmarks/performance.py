@@ -1,13 +1,13 @@
 """
-Performance Benchmarks for DesiLang.
+Performance Benchmarks for MeriLang.
 
 Measures execution speed for various language features.
 """
 
 import time
 from typing import Callable, Tuple
-from desilang.parser_enhanced import parse_desilang
-from desilang.interpreter_enhanced import Interpreter
+from MeriLang.parser_enhanced import parse_MeriLang
+from MeriLang.interpreter_enhanced import Interpreter
 
 
 def benchmark(name: str, code: str, iterations: int = 1000) -> Tuple[float, float]:
@@ -16,14 +16,14 @@ def benchmark(name: str, code: str, iterations: int = 1000) -> Tuple[float, floa
     
     Args:
         name: Benchmark name
-        code: DesiLang code to benchmark
+        code: MeriLang code to benchmark
         iterations: Number of iterations
         
     Returns:
         Tuple of (total_time, time_per_iteration)
     """
     # Parse once
-    ast = parse_desilang(code)
+    ast = parse_MeriLang(code)
     
     # Warm up
     interpreter = Interpreter()
@@ -46,7 +46,7 @@ def benchmark(name: str, code: str, iterations: int = 1000) -> Tuple[float, floa
 def run_benchmarks():
     """Run all benchmarks."""
     print("=" * 80)
-    print("DesiLang Performance Benchmarks")
+    print("MeriLang Performance Benchmarks")
     print("=" * 80)
     print()
     

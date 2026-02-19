@@ -1,5 +1,5 @@
 """
-Integration tests for DesiLang - test complete programs.
+Integration tests for MeriLang - test complete programs.
 """
 
 import pytest
@@ -11,7 +11,7 @@ from merilang.interpreter import Interpreter
 
 
 def run_program(code: str):
-    """Run a complete DesiLang program and capture output."""
+    """Run a complete MeriLang program and capture output."""
     tokens = tokenize(code)
     parser = Parser(tokens)
     ast = parser.parse()

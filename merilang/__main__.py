@@ -1,6 +1,6 @@
 """
-Main entry point for running DesiLang as a module.
-Usage: python -m desilang run script.dl
+Main entry point for running MeriLang as a module.
+Usage: python -m MeriLang run script.dl
 """
 
 from .cli import main

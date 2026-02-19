@@ -4,23 +4,38 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "merilang"
-version = "1.0.2"
-description = "A desi toy programming language built with Python"
+version = "3.0.0"
+description = "Merilang — a desi-flavoured programming language with a full compiler front-end"
 readme = "README.md"
 requires-python = ">=3.12"
 license = {text = "MIT"}
-keywords = ["programming-language", "interpreter", "desi", "education", "learning"]
+keywords = [
+    "programming-language",
+    "compiler",
+    "interpreter",
+    "desi",
+    "hindi",
+    "education",
+    "learning",
+    "three-address-code",
+    "semantic-analysis",
+]
 authors = [
-    {name = "DesiLang Community"}
+    {name = "Merilang Community", email = "xploitmonk0x01@github.com"}
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Education",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
+    "Natural Language :: Hindi",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3 :: Only",
     "Topic :: Education",
+    "Topic :: Software Development :: Compilers",
     "Topic :: Software Development :: Interpreters",
 ]
 
@@ -32,34 +47,52 @@ dependencies = [
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
+    "mypy>=1.0.0",
 ]
 playground = [
     "flask>=3.0.0",
 ]
 
 [project.urls]
-Homepage = "https://github.com/XploitMonk0x01/merilang"
-Documentation = "https://github.com/XploitMonk0x01/merilang#readme"
-Repository = "https://github.com/XploitMonk0x01/merilang"
+Homepage      = "https://github.com/XploitMonk0x01/merilang"
+Documentation = "https://github.com/XploitMonk0x01/merilang/blob/main/Guide.md"
+Repository    = "https://github.com/XploitMonk0x01/merilang"
 "Bug Tracker" = "https://github.com/XploitMonk0x01/merilang/issues"
+Changelog     = "https://github.com/XploitMonk0x01/merilang/releases"
+
+# ---------------------------------------------------------------------------
+# Entry points
+# ---------------------------------------------------------------------------
 
 [project.scripts]
 merilang = "merilang.cli:main"
-ml = "merilang.cli:main"
+ml       = "merilang.cli:main"
 
-[tool.setuptools]
-packages = ["merilang"]
+# ---------------------------------------------------------------------------
+# Package discovery
+# ---------------------------------------------------------------------------
+
+[tool.setuptools.packages.find]
+where   = ["."]
+include = ["merilang*"]
+
+[tool.setuptools.package-data]
+merilang = ["py.typed"]
+
+# ---------------------------------------------------------------------------
+# Test configuration
+# ---------------------------------------------------------------------------
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
+testpaths    = ["tests"]
+python_files = ["test_*.py", "smoke_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-addopts = "-v --strict-markers"
+addopts      = "-v --strict-markers"
 
 [tool.coverage.run]
 source = ["merilang"]
-omit = ["*/tests/*"]
+omit   = ["*/tests/*", "*/smoke_*"]
 
 [tool.coverage.report]
 exclude_lines = [
@@ -69,3 +102,12 @@ exclude_lines = [
     "raise NotImplementedError",
     "if __name__ == .__main__.:",
 ]
+
+# ---------------------------------------------------------------------------
+# Type checking
+# ---------------------------------------------------------------------------
+
+[tool.mypy]
+python_version = "3.12"
+strict         = false
+ignore_missing_imports = true

@@ -47,9 +47,9 @@ htmlcov/
 # Distribution / packaging
 *.spec
 
-# DesiLang specific
-*.desilang.out
-*.desilang.tmp
+# MeriLang specific
+*.MeriLang.out
+*.MeriLang.tmp
 
 # Playground
 playground/__pycache__/

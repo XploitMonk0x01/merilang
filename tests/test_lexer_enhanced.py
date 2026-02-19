@@ -3,7 +3,7 @@ Comprehensive tests for enhanced lexer with regex tokenization.
 
 Tests cover all token types, edge cases, error handling, and Unicode support.
 
-Author: DesiLang Team
+Author: MeriLang Team
 Version: 2.0
 """
 

@@ -17,7 +17,7 @@ dikhao length(message)
 
 // String replacement
 text = "I love Python"
-new_text = replace(text, "Python", "DesiLang")
+new_text = replace(text, "Python", "MeriLang")
 dikhao new_text
 
 // String splitting

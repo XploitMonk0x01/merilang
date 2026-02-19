@@ -1,5 +1,5 @@
 """
-Enhanced AST nodes for DesiLang Phase 2.
+Enhanced AST nodes for MeriLang Phase 2.
 
 Adds support for:
 - Parenthesized expressions
@@ -8,7 +8,7 @@ Adds support for:
 - Dictionary literals
 - Enhanced type annotations
 
-Author: DesiLang Team
+Author: MeriLang Team
 Version: 2.0 - Phase 2
 """
 

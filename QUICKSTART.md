@@ -1,13 +1,13 @@
-# Quick Start Guide - DesiLang
+# Quick Start Guide - MeriLang
 
-Get up and running with DesiLang in 5 minutes!
+Get up and running with MeriLang in 5 minutes!
 
-## Step 1: Install DesiLang
+## Step 1: Install MeriLang
 
 ```bash
 # Clone the repository
 git clone https://github.com/XploitMonk0x01/merilang.git
-cd desilang
+cd MeriLang
 
 # Install
 pip install -e .
@@ -17,29 +17,29 @@ pip install -e .
 
 Create a file called `hello.meri`:
 
-```desilang
+```MeriLang
 shuru
-dikhao "Hello, DesiLang!"
+dikhao "Hello, MeriLang!"
 khatam
 ```
 
 ## Step 3: Run It
 
 ```bash
-python -m desilang run hello.meri
+python -m MeriLang run hello.meri
 ```
 
 Output:
 
 ```
-Hello, DesiLang!
+Hello, MeriLang!
 ```
 
 ## Step 4: Try Something More Interesting
 
 Create `calculator.meri`:
 
-```desilang
+```MeriLang
 shuru
 // Simple calculator
 a = 10
@@ -55,7 +55,7 @@ khatam
 Run it:
 
 ```bash
-python -m desilang run calculator.meri
+python -m MeriLang run calculator.meri
 ```
 
 ## Step 5: Learn with Examples
@@ -64,22 +64,22 @@ Run the included examples:
 
 ```bash
 # Hello World
-python -m desilang run examples/01_hello_world.meri
+python -m MeriLang run examples/01_hello_world.meri
 
 # Loops
-python -m desilang run examples/04_loops.meri
+python -m MeriLang run examples/04_loops.meri
 
 # Functions
-python -m desilang run examples/05_functions.meri
+python -m MeriLang run examples/05_functions.meri
 
 # FizzBuzz
-python -m desilang run examples/06_fizzbuzz.meri
+python -m MeriLang run examples/06_fizzbuzz.meri
 ```
 
 ## Step 6: Try the REPL
 
 ```bash
-python -m desilang repl
+python -m MeriLang repl
 ```
 
 Try typing:
@@ -97,7 +97,7 @@ Try typing:
 
 Let's create a number guessing game! Create `guess.meri`:
 
-```desilang
+```MeriLang
 shuru
 // Number guessing game
 secret = 42
@@ -205,4 +205,4 @@ khatam
 
 Remember, programming should be fun! Don't worry about making mistakes - that's how we learn.
 
-Happy coding in DesiLang! 🇮🇳
+Happy coding in MeriLang! 🇮🇳

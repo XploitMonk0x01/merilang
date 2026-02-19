@@ -1,6 +1,6 @@
-# Contributing to DesiLang
+# Contributing to MeriLang
 
-Thank you for your interest in contributing to DesiLang! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to MeriLang! This document provides guidelines for contributing to the project.
 
 ## 🌟 Ways to Contribute
 
@@ -12,7 +12,7 @@ Found a bug? Please [open an issue](https://github.com/XploitMonk0x01/merilang/i
 - **Steps to Reproduce**: Minimal code to reproduce the issue
 - **Expected Behavior**: What should happen
 - **Actual Behavior**: What actually happens
-- **Environment**: Python version, OS, DesiLang version
+- **Environment**: Python version, OS, MeriLang version
 
 **Example**:
 
@@ -21,14 +21,14 @@ Found a bug? Please [open an issue](https://github.com/XploitMonk0x01/merilang/i
 
 **Code**:
 
-```desilang
+```MeriLang
 maan x = 10 / 0
 ```
 ````
 
 **Expected**: DivisionByZeroError
 **Actual**: Generic RuntimeError
-**Environment**: Python 3.11, Windows 11, DesiLang 2.0.0
+**Environment**: Python 3.11, Windows 11, MeriLang 2.0.0
 
 ````
 
@@ -89,16 +89,16 @@ git checkout -b bugfix/bug-description
 pytest
 
 # Check coverage
-pytest --cov=desilang --cov-report=html
+pytest --cov=MeriLang --cov-report=html
 
 # Type checking
-mypy desilang
+mypy MeriLang
 
 # Format code
-black desilang tests
+black MeriLang tests
 
 # Lint code
-ruff check desilang tests
+ruff check MeriLang tests
 ```
 
 #### Commit Changes
@@ -228,7 +228,7 @@ class Parser:
 ### Code Structure
 
 ```
-desilang/
+MeriLang/
 ├── lexer_enhanced.py      # Tokenization
 ├── parser_enhanced.py     # Parsing
 ├── interpreter_enhanced.py # Execution
@@ -304,10 +304,10 @@ Contributors will be:
 Questions? Reach out:
 
 - **Issues**: [GitHub Issues](https://github.com/XploitMonk0x01/merilang/issues)
-- **Email**: maintainer@desilang.org (if applicable)
+- **Email**: maintainer@MeriLang.org (if applicable)
 
 ---
 
-**Thank you for contributing to DesiLang!** 🙏
+**Thank you for contributing to MeriLang!** 🙏
 
 Your contributions help make programming more accessible to millions of Hindustani speakers worldwide.

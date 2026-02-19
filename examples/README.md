@@ -1,6 +1,6 @@
-# DesiLang Examples
+# MeriLang Examples
 
-This directory contains 25+ example programs demonstrating DesiLang features.
+This directory contains 25+ example programs demonstrating MeriLang features.
 
 ## Basic Examples
 
@@ -52,10 +52,10 @@ This directory contains 25+ example programs demonstrating DesiLang features.
 
 ```bash
 # Run any example
-python -m desilang examples/01_hello_world.meri
+python -m MeriLang examples/01_hello_world.meri
 
 # Or using the interpreter directly
-python desilang/main.py examples/15_fizzbuzz.meri
+python MeriLang/main.py examples/15_fizzbuzz.meri
 ```
 
 ## Learning Path

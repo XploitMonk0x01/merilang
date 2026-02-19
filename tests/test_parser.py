@@ -1,5 +1,5 @@
 """
-Unit tests for DesiLang parser.
+Unit tests for MeriLang parser.
 """
 
 import pytest
@@ -260,12 +260,12 @@ khatam
 
 def test_parse_import():
     """Test parsing import statement."""
-    code = 'shuru lao "mylib.desilang" khatam'
+    code = 'shuru lao "mylib.MeriLang" khatam'
     ast = parse_code(code)
     
     assert len(ast.statements) == 1
     assert isinstance(ast.statements[0], ImportNode)
-    assert ast.statements[0].filename == "mylib.desilang"
+    assert ast.statements[0].filename == "mylib.MeriLang"
 
 
 def test_parse_input():

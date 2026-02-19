@@ -1,5 +1,5 @@
 """
-Unit tests for DesiLang interpreter.
+Unit tests for MeriLang interpreter.
 """
 
 import pytest
