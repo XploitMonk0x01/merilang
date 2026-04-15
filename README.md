@@ -2,14 +2,14 @@
 
 **A desi-flavoured programming language with a full compiler front-end — built in Python.**
 
-[![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](https://github.com/XploitMonk0x01/merilang)
+[![Version](https://img.shields.io/badge/version-3.2.0-blue.svg)](https://github.com/XploitMonk0x01/merilang)
 [![PyPI](https://img.shields.io/pypi/v/merilang.svg)](https://pypi.org/project/merilang/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
 
 ---
 
-## What's New in v3.0 🆕
+## What's New in v3.2 🆕
 
 Merilang has graduated from a basic interpreter to a **full compiler front-end**:
 
@@ -88,7 +88,7 @@ merilang repl
 ```
 
 ```
-Merilang v3.0.0 Interactive REPL
+Merilang v3.2.0 Interactive REPL
 >>> maan x = 10
 >>> maan y = 32
 >>> likho(x + y)
@@ -327,7 +327,7 @@ merilang --version
 ```
 merilang/
 ├── merilang/
-│   ├── __init__.py              # Public API (v3.0.0)
+│   ├── __init__.py              # Public API (v3.2.0)
 │   ├── __main__.py              # python -m merilang
 │   ├── cli.py                   # Arg parsing + pipeline wiring
 │   ├── errors_enhanced.py       # All error classes (bilingual)
@@ -391,7 +391,7 @@ merilang/
 
 ## Error System 🚨
 
-Merilang reports errors in **English + Hindi** with line/column positions. In v3.0 all errors from a single run are reported together (panic-mode), so you fix all issues at once.
+Merilang reports errors in **English + Hindi** with line/column positions. In v3.2 all errors from a single run are reported together (panic-mode), so you fix all issues at once.
 
 ```
 [LexerError]  Line 4, Col 9: Unexpected character: '@'

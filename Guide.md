@@ -568,7 +568,7 @@ from merilang import (
 )
 ```
 
-**Version:** `__version__ = "3.0.0"`
+**Version:** `__version__ = "3.2.0"`
 
 ---
 

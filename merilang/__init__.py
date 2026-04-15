@@ -1,12 +1,12 @@
 """
 Merilang – a desi-inspired programming language.
 
-Version: 3.0.0 (Compiler Front-End)
+Version: 3.2.0 (Compiler Front-End)
 Author:  Merilang Community
 License: MIT
 """
 
-__version__ = "3.0.0"
+__version__ = "3.2.0"
 __author__  = "Merilang Community"
 
 # ---------------------------------------------------------------------------

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "merilang"
-version = "3.0.0"
+version = "3.2.0"
 description = "Merilang — a desi-flavoured programming language with a full compiler front-end"
 readme = "README.md"
 requires-python = ">=3.12"
