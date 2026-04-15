@@ -441,6 +441,7 @@ class SemanticAnalyzer:
                 inferred_type=MType.FUNC,
                 line=node.line,
                 param_count=len(node.parameters),
+                parameters=list(node.parameters),
             ))
 
         # Analyse the body in a new scope.
@@ -531,6 +532,7 @@ class SemanticAnalyzer:
                 kind=SymbolKind.CLASS,
                 inferred_type=MType.CLASS,
                 line=node.line,
+                class_members=[m.name for m in node.methods],
             ))
 
         if node.parent is not None:

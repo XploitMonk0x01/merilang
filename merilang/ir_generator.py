@@ -103,6 +103,9 @@ class IRGenerator:
         self._labels:         _LabelGen  = _LabelGen()
         self._break_stack:    List[Label] = []
         self._continue_stack: List[Label] = []
+        self._patch_true_label = Label("__patch_true__")
+        self._patch_false_label = Label("__patch_false__")
+        self._patch_jump_label = Label("__patch_jump__")
 
     # ------------------------------------------------------------------
     # Public API
@@ -127,6 +130,43 @@ class IRGenerator:
     def _emit(self, instr: IRInstr) -> None:
         """Append a single instruction to the program."""
         self._program.append(instr)
+
+    def _emit_jump_placeholder(self, source_line: int) -> int:
+        """Emit an unresolved jump and return its instruction index."""
+        idx = len(self._program.instructions)
+        self._emit(Jump(source_line=source_line, target=self._patch_jump_label))
+        return idx
+
+    def _emit_cond_placeholder(self, condition: object, source_line: int) -> int:
+        """Emit an unresolved conditional jump and return its index."""
+        idx = len(self._program.instructions)
+        self._emit(CondJump(
+            source_line=source_line,
+            condition=condition,
+            true_label=self._patch_true_label,
+            false_label=self._patch_false_label,
+        ))
+        return idx
+
+    def _patch_jump(self, instr_index: int, target: Label) -> None:
+        instr = self._program.instructions[instr_index]
+        if isinstance(instr, Jump):
+            instr.target = target
+
+    def _patch_cond(
+        self,
+        instr_index: int,
+        *,
+        true_label: Optional[Label] = None,
+        false_label: Optional[Label] = None,
+    ) -> None:
+        instr = self._program.instructions[instr_index]
+        if not isinstance(instr, CondJump):
+            return
+        if true_label is not None:
+            instr.true_label = true_label
+        if false_label is not None:
+            instr.false_label = false_label
 
     def _fresh_temp(self) -> Temp:
         return self._temps.fresh()
@@ -214,6 +254,9 @@ class IRGenerator:
             → ``t0 = b``, ``t1 = c``, ``t2 = t0 * t1``,
               ``t3 = a``, ``t4 = t3 + t2``, ``x = t4``
         """
+        if node.operator in {"aur", "ya"}:
+            return self._emit_short_circuit_bool(node)
+
         left_temp  = self._visit(node.left)
         right_temp = self._visit(node.right)
         result     = self._fresh_temp()
@@ -224,6 +267,45 @@ class IRGenerator:
             left=left_temp,
             right=right_temp,
         ))
+        return result
+
+    def _emit_short_circuit_bool(self, node: BinaryOpNode) -> Temp:
+        """Lower `aur` / `ya` using backpatched control flow."""
+        result = self._fresh_temp()
+        true_lbl = self._fresh_label("bool_true_")
+        false_lbl = self._fresh_label("bool_false_")
+        end_lbl = self._fresh_label("bool_end_")
+
+        left_temp = self._visit(node.left)
+
+        if node.operator == "ya":
+            rhs_lbl = self._fresh_label("or_rhs_")
+            first_cond = self._emit_cond_placeholder(left_temp, node.line)
+            self._patch_cond(first_cond, true_label=true_lbl, false_label=rhs_lbl)
+
+            self._emit(LabelInstr(source_line=node.line, label=rhs_lbl))
+            right_temp = self._visit(node.right)
+            second_cond = self._emit_cond_placeholder(right_temp, node.line)
+            self._patch_cond(second_cond, true_label=true_lbl, false_label=false_lbl)
+        else:
+            rhs_lbl = self._fresh_label("and_rhs_")
+            first_cond = self._emit_cond_placeholder(left_temp, node.line)
+            self._patch_cond(first_cond, true_label=rhs_lbl, false_label=false_lbl)
+
+            self._emit(LabelInstr(source_line=node.line, label=rhs_lbl))
+            right_temp = self._visit(node.right)
+            second_cond = self._emit_cond_placeholder(right_temp, node.line)
+            self._patch_cond(second_cond, true_label=true_lbl, false_label=false_lbl)
+
+        self._emit(LabelInstr(source_line=node.line, label=true_lbl))
+        self._emit(Assign(source_line=node.line, result=result, value=True))
+        j_end = self._emit_jump_placeholder(node.line)
+
+        self._emit(LabelInstr(source_line=node.line, label=false_lbl))
+        self._emit(Assign(source_line=node.line, result=result, value=False))
+
+        self._emit(LabelInstr(source_line=node.line, label=end_lbl))
+        self._patch_jump(j_end, end_lbl)
         return result
 
     def _visit_UnaryOpNode(self, node: UnaryOpNode) -> Temp:

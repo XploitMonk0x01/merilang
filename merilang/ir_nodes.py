@@ -14,7 +14,7 @@ Version: 3.0 - Compiler Front-End
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 
 # ---------------------------------------------------------------------------
@@ -139,6 +139,19 @@ class Copy(IRInstr):
 
     def __str__(self) -> str:  # pragma: no cover
         return f"    {self.dest} = {self.src}"
+
+
+@dataclass
+class Phi(IRInstr):
+    """SSA merge instruction: ``result = PHI(pred0:v0, pred1:v1, ...)``."""
+
+    result: object   # Temp or variable name (str)
+    sources: Dict[str, object] = field(default_factory=dict)
+    source_line: int = 1
+
+    def __str__(self) -> str:  # pragma: no cover
+        joined = ", ".join(f"{pred}:{val}" for pred, val in self.sources.items())
+        return f"    {self.result} = PHI({joined})"
 
 
 # ---------------------------------------------------------------------------

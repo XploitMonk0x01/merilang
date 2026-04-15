@@ -22,6 +22,9 @@ from .parser_enhanced import Parser
 from .interpreter_enhanced import Interpreter
 from .semantic_analyzer import SemanticAnalyzer
 from .ir_generator import IRGenerator
+from .ir_analysis import build_cfg
+from .ir_optimizer import optimize_ir
+from .ir_ssa import convert_to_ssa
 from .errors_enhanced import (
     MeriLangError,
     LexerErrorCollection,
@@ -58,6 +61,9 @@ def _run_pipeline(
     debug: bool = False,
     run_semantic: bool = True,
     emit_ir: bool = False,
+    emit_cfg: bool = False,
+    optimize: bool = False,
+    emit_ssa: bool = False,
     error_language: ErrorLanguage = ErrorLanguage.ENGLISH,
     interpreter: "Interpreter | None" = None,
 ) -> int:
@@ -69,6 +75,9 @@ def _run_pipeline(
         debug:        Print tokens and AST.
         run_semantic: Run the SemanticAnalyzer pass.
         emit_ir:      Dump the IR listing before execution.
+        emit_cfg:     Dump basic blocks + CFG before execution.
+        optimize:     Run IR optimization passes before dumps.
+        emit_ssa:     Convert and dump SSA form.
         error_language: Language for bilingual error messages.
         interpreter:  Pre-created Interpreter instance (used by REPL to share state).
 
@@ -132,12 +141,40 @@ def _run_pipeline(
     # ------------------------------------------------------------------ #
     # Phase 4 – IR Generation (optional)
     # ------------------------------------------------------------------ #
-    if emit_ir:
-        _print_banner("Intermediate Representation (3AC)", "magenta")
+    if emit_ir or emit_cfg or optimize or emit_ssa:
         gen = IRGenerator()
-        ir  = gen.generate(ast)
-        print(ir.dump())
-        print()   # blank line before execution output
+        ir = gen.generate(ast)
+
+        if optimize:
+            ir, report = optimize_ir(ir)
+            _print_banner("IR Optimizer", "magenta")
+            print(
+                f"constant_folds={report.constant_folds}, "
+                f"dead_removed={report.dead_instructions_removed}, "
+                f"cse_rewrites={report.cse_rewrites}, "
+                f"dag_rewrites={report.dag_rewrites}"
+            )
+
+        if emit_ssa:
+            ssa_ir, ssa_report = convert_to_ssa(ir)
+            _print_banner("SSA Conversion", "magenta")
+            print(
+                f"phi_inserted={ssa_report.phi_inserted}, "
+                f"definitions_renamed={ssa_report.definitions_renamed}"
+            )
+            print(ssa_ir.dump())
+            print()
+
+        if emit_ir:
+            _print_banner("Intermediate Representation (3AC)", "magenta")
+            print(ir.dump())
+            print()
+
+        if emit_cfg:
+            _print_banner("Control Flow Graph (Basic Blocks)", "magenta")
+            cfg = build_cfg(ir)
+            print(cfg.dump())
+            print()
 
     # ------------------------------------------------------------------ #
     # Phase 5 – Interpretation
@@ -167,6 +204,9 @@ def run_file(
     debug: bool = False,
     semantic: bool = True,
     emit_ir: bool = False,
+    emit_cfg: bool = False,
+    optimize: bool = False,
+    emit_ssa: bool = False,
 ) -> int:
     """Run a Merilang source file end-to-end.
 
@@ -175,6 +215,9 @@ def run_file(
         debug:    Enable verbose token / AST / section output.
         semantic: Run the semantic analysis pass (default True).
         emit_ir:  Print the IR listing before executing.
+        emit_cfg: Print basic blocks + CFG before executing.
+        optimize: Run IR optimizer before printing IR/CFG.
+        emit_ssa: Print SSA-converted IR.
 
     Returns:
         Exit code.
@@ -201,6 +244,9 @@ def run_file(
             debug=debug,
             run_semantic=semantic,
             emit_ir=emit_ir,
+            emit_cfg=emit_cfg,
+            optimize=optimize,
+            emit_ssa=emit_ssa,
         )
     except KeyboardInterrupt:
         print(colored("\n\nExecution interrupted by user", "yellow"))
@@ -217,7 +263,14 @@ def run_file(
 # REPL
 # ---------------------------------------------------------------------------
 
-def run_repl(*, semantic: bool = True, emit_ir: bool = False) -> int:
+def run_repl(
+    *,
+    semantic: bool = True,
+    emit_ir: bool = False,
+    emit_cfg: bool = False,
+    optimize: bool = False,
+    emit_ssa: bool = False,
+) -> int:
     """Interactive Read-Eval-Print Loop.
 
     Maintains a single ``Interpreter`` instance across lines so variables
@@ -226,6 +279,9 @@ def run_repl(*, semantic: bool = True, emit_ir: bool = False) -> int:
     Args:
         semantic: Run semantic analysis before each statement.
         emit_ir:  Print IR for each statement.
+        emit_cfg: Print CFG for each statement.
+        optimize: Optimize IR before output.
+        emit_ssa: Convert IR to SSA before output.
 
     Returns:
         Exit code (always 0).
@@ -236,6 +292,12 @@ def run_repl(*, semantic: bool = True, emit_ir: bool = False) -> int:
         flags.append("semantic-on")
     if emit_ir:
         flags.append("ir-on")
+    if emit_cfg:
+        flags.append("cfg-on")
+    if optimize:
+        flags.append("opt-on")
+    if emit_ssa:
+        flags.append("ssa-on")
     if flags:
         print(colored(f"  [{', '.join(flags)}]", "cyan"))
     print(colored("Type 'niklo' or press Ctrl+C to quit\n", "cyan"))
@@ -262,6 +324,9 @@ def run_repl(*, semantic: bool = True, emit_ir: bool = False) -> int:
             debug=False,
             run_semantic=semantic,
             emit_ir=emit_ir,
+            emit_cfg=emit_cfg,
+            optimize=optimize,
+            emit_ssa=emit_ssa,
             interpreter=interpreter,
         )
 
@@ -283,9 +348,12 @@ Examples:
   merilang run script.meri            Run a Merilang script
   merilang run script.meri --debug    Run with debug output (tokens + AST)
   merilang run script.meri --ir       Print 3AC IR before running
+    merilang run script.meri --cfg      Print basic blocks + CFG
+    merilang run script.meri --opt-ir   Optimize IR before dumping
+    merilang run script.meri --ssa      Show SSA-converted IR
   merilang run script.meri --no-semantic  Skip semantic analysis
   merilang repl                       Start interactive REPL
-  merilang repl --ir                  REPL with IR output
+    merilang repl --ir --cfg --opt-ir --ssa   REPL with compiler middle-end output
   merilang version                    Show version information
         """,
     )
@@ -302,6 +370,12 @@ Examples:
                        help="Print tokens, AST, and section banners")
     run_p.add_argument("--ir", action="store_true",
                        help="Print Three-Address Code IR before executing")
+    run_p.add_argument("--cfg", action="store_true",
+                       help="Print basic blocks + control-flow graph")
+    run_p.add_argument("--opt-ir", action="store_true",
+                       help="Optimize IR before dumping")
+    run_p.add_argument("--ssa", action="store_true",
+                       help="Convert IR into SSA form and print it")
     run_p.add_argument("--no-semantic", action="store_true",
                        help="Skip the semantic analysis pass (faster, less safe)")
 
@@ -309,6 +383,12 @@ Examples:
     repl_p = subparsers.add_parser("repl", help="Start interactive REPL")
     repl_p.add_argument("--ir", action="store_true",
                         help="Show IR output for each evaluated expression")
+    repl_p.add_argument("--cfg", action="store_true",
+                        help="Show CFG output for each evaluated expression")
+    repl_p.add_argument("--opt-ir", action="store_true",
+                        help="Optimize IR before printing")
+    repl_p.add_argument("--ssa", action="store_true",
+                        help="Convert IR into SSA form and print it")
     repl_p.add_argument("--no-semantic", action="store_true",
                         help="Skip semantic analysis in REPL")
 
@@ -323,12 +403,18 @@ Examples:
             debug=args.debug,
             semantic=not args.no_semantic,
             emit_ir=args.ir,
+            emit_cfg=args.cfg,
+            optimize=args.opt_ir,
+            emit_ssa=args.ssa,
         )
 
     if args.command == "repl":
         return run_repl(
             semantic=not args.no_semantic,
             emit_ir=args.ir,
+            emit_cfg=args.cfg,
+            optimize=args.opt_ir,
+            emit_ssa=args.ssa,
         )
 
     if args.command == "version":

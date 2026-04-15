@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 
 # ---------------------------------------------------------------------------
@@ -80,6 +80,11 @@ class Symbol:
     inferred_type: str
     line:          int
     param_count:   Optional[int] = None   # only set for FUNCTION symbols
+    parameters:    Optional[List[str]] = None
+    class_members: Optional[List[str]] = None
+    scope_name:    Optional[str] = None
+    scope_depth:   Optional[int] = None
+    memory_location: Optional[str] = None
 
 
 # ---------------------------------------------------------------------------
@@ -109,6 +114,7 @@ class SymbolTable:
         self._bindings: Dict[str, Symbol] = {}
         self.parent = parent
         self.depth: int = (parent.depth + 1) if parent is not None else 0
+        self._next_slot: int = 0
 
     # ------------------------------------------------------------------
     # Core operations
@@ -124,6 +130,13 @@ class SymbolTable:
         Args:
             symbol: The Symbol record to register.
         """
+        if symbol.scope_name is None:
+            symbol.scope_name = "global" if self.depth == 0 else "local"
+        if symbol.scope_depth is None:
+            symbol.scope_depth = self.depth
+        if symbol.memory_location is None:
+            symbol.memory_location = f"stack[{self.depth}:{self._next_slot}]"
+        self._next_slot += 1
         self._bindings[symbol.name] = symbol
 
     def resolve(self, name: str) -> Optional[Symbol]:
@@ -206,6 +219,30 @@ class SymbolTable:
     def local_names(self) -> List[str]:
         """Return names defined in this scope only."""
         return list(self._bindings.keys())
+
+    def structured_symbols(self, include_parents: bool = True) -> List[Dict[str, Any]]:
+        """Return structured symbol table entries suitable for reports/JSON."""
+        entries: List[Dict[str, Any]] = []
+        for sym in self._bindings.values():
+            entries.append(
+                {
+                    "name": sym.name,
+                    "type": sym.inferred_type,
+                    "kind": sym.kind.name.lower(),
+                    "scope": sym.scope_name,
+                    "scope_depth": sym.scope_depth,
+                    "memory": sym.memory_location,
+                    "line": sym.line,
+                    "param_count": sym.param_count,
+                    "parameters": list(sym.parameters or []),
+                    "class_members": list(sym.class_members or []),
+                }
+            )
+
+        if include_parents and self.parent is not None:
+            entries.extend(self.parent.structured_symbols(include_parents=True))
+
+        return entries
 
     def __repr__(self) -> str:  # pragma: no cover
         local = ", ".join(self._bindings.keys())

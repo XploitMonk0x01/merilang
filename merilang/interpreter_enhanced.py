@@ -65,6 +65,81 @@ class ContinueException(Exception):
     pass
 
 
+@dataclass
+class ActivationRecord:
+    """Represents one function/lambda call frame on the runtime stack."""
+
+    function_name: str
+    params: Dict[str, Any]
+    locals: Dict[str, Any]
+    return_address: Optional[int]
+    depth: int
+
+
+class RuntimeStack:
+    """Explicit runtime stack model used by the interpreter."""
+
+    def __init__(self) -> None:
+        self.frames: List[ActivationRecord] = []
+
+    def push(self, frame: ActivationRecord) -> None:
+        self.frames.append(frame)
+
+    def pop(self) -> ActivationRecord:
+        return self.frames.pop()
+
+    def peek(self) -> Optional[ActivationRecord]:
+        if not self.frames:
+            return None
+        return self.frames[-1]
+
+    def depth(self) -> int:
+        return len(self.frames)
+
+
+@dataclass
+class HeapObject:
+    """One allocated object tracked in the explicit runtime heap."""
+
+    object_id: int
+    kind: str
+    value: Any
+
+
+class RuntimeHeap:
+    """Explicit heap model for dynamically allocated runtime objects."""
+
+    def __init__(self) -> None:
+        self._next_id = 1
+        self._objects: Dict[int, HeapObject] = {}
+        self._by_identity: Dict[int, int] = {}
+
+    def allocate(self, value: Any, kind: str) -> int:
+        identity = id(value)
+        if identity in self._by_identity:
+            return self._by_identity[identity]
+
+        object_id = self._next_id
+        self._next_id += 1
+        obj = HeapObject(object_id=object_id, kind=kind, value=value)
+        self._objects[object_id] = obj
+        self._by_identity[identity] = object_id
+        return object_id
+
+    def get(self, object_id: int) -> HeapObject:
+        return self._objects[object_id]
+
+    def all_objects(self) -> List[HeapObject]:
+        return list(self._objects.values())
+
+    def stats(self) -> Dict[str, int]:
+        by_kind: Dict[str, int] = {}
+        for obj in self._objects.values():
+            by_kind[obj.kind] = by_kind.get(obj.kind, 0) + 1
+        by_kind["total"] = len(self._objects)
+        return by_kind
+
+
 # ============================================================================
 # Function Objects
 # ============================================================================
@@ -420,6 +495,9 @@ class Interpreter:
         self.error_language = error_language
         self.debug = debug
         self.call_stack: List[str] = []
+        self.runtime_stack = RuntimeStack()
+        self.runtime_heap = RuntimeHeap()
+        self.activation_records = self.runtime_stack.frames
         
         # Register built-in functions
         for name, func in BUILTINS.items():
@@ -492,7 +570,9 @@ class Interpreter:
     
     def visit_ListNode(self, node: ListNode) -> List[Any]:
         """Evaluate and return list."""
-        return [self.visit(elem) for elem in node.elements]
+        value = [self.visit(elem) for elem in node.elements]
+        self.runtime_heap.allocate(value, kind="list")
+        return value
     
     def visit_DictNode(self, node: DictNode) -> Dict[Any, Any]:
         """
@@ -518,6 +598,7 @@ class Interpreter:
             
             result[key] = value
         
+        self.runtime_heap.allocate(result, kind="dict")
         return result
     
     def visit_ParenthesizedNode(self, node: ParenthesizedNode) -> Any:
@@ -816,6 +897,7 @@ class Interpreter:
             body=node.body,
             closure=self.current_env
         )
+        self.runtime_heap.allocate(func, kind="function")
         self.current_env.define(node.name, func)
     
     def visit_FunctionCallNode(self, node: FunctionCallNode) -> Any:
@@ -902,13 +984,24 @@ class Interpreter:
         func_env = Environment(func.closure)
         
         # Bind parameters
+        param_bindings: Dict[str, Any] = {}
         for param, arg in zip(func.parameters, args):
             func_env.define(param, arg)
+            param_bindings[param] = arg
+
+        frame = ActivationRecord(
+            function_name=func.name,
+            params=param_bindings,
+            locals=func_env.bindings,
+            return_address=line,
+            depth=self.runtime_stack.depth() + 1,
+        )
         
         # Execute function body
         prev_env = self.current_env
         self.current_env = func_env
         self.call_stack.append(func.name)
+        self.runtime_stack.push(frame)
         
         try:
             for stmt in func.body:
@@ -919,6 +1012,7 @@ class Interpreter:
         finally:
             self.current_env = prev_env
             self.call_stack.pop()
+            self.runtime_stack.pop()
     
     def _call_lambda(
         self,
@@ -948,17 +1042,29 @@ class Interpreter:
         lambda_env = Environment(func.closure)
         
         # Bind parameters
+        param_bindings: Dict[str, Any] = {}
         for param, arg in zip(func.parameters, args):
             lambda_env.define(param, arg)
+            param_bindings[param] = arg
+
+        frame = ActivationRecord(
+            function_name="<lambda>",
+            params=param_bindings,
+            locals=lambda_env.bindings,
+            return_address=line,
+            depth=self.runtime_stack.depth() + 1,
+        )
         
         # Evaluate body (single expression)
         prev_env = self.current_env
         self.current_env = lambda_env
+        self.runtime_stack.push(frame)
         
         try:
             return self.visit(func.body)
         finally:
             self.current_env = prev_env
+            self.runtime_stack.pop()
     
     def visit_ReturnNode(self, node: ReturnNode) -> None:
         """Execute return statement."""
@@ -969,11 +1075,13 @@ class Interpreter:
     
     def visit_LambdaNode(self, node: LambdaNode) -> Lambda:
         """Create and return lambda function."""
-        return Lambda(
+        lam = Lambda(
             parameters=node.parameters,
             body=node.body,
             closure=self.current_env
         )
+        self.runtime_heap.allocate(lam, kind="lambda")
+        return lam
     
     # ========================================================================
     # Object-Oriented Programming Visitors
@@ -1004,6 +1112,7 @@ class Interpreter:
         
         # Create and store class
         desi_class = DesiClass(node.name, parent, methods)
+        self.runtime_heap.allocate(desi_class, kind="class")
         self.current_env.define(node.name, desi_class)
     
     def visit_NewObjectNode(self, node: NewObjectNode) -> DesiInstance:
@@ -1017,6 +1126,7 @@ class Interpreter:
         
         # Create instance
         instance = DesiInstance(class_value)
+        self.runtime_heap.allocate(instance, kind="object")
         
         # Call constructor if it exists
         constructor = class_value.get_method('__init__')
@@ -1378,6 +1488,15 @@ class Interpreter:
     # ========================================================================
     # Helper Methods
     # ========================================================================
+
+    def runtime_memory_snapshot(self) -> Dict[str, Any]:
+        """Return a snapshot of the explicit runtime stack/heap state."""
+        return {
+            "stack_depth": self.runtime_stack.depth(),
+            "call_stack": list(self.call_stack),
+            "heap": self.runtime_heap.stats(),
+            "top_frame": self.runtime_stack.peek(),
+        }
     
     def is_truthy(self, value: Any) -> bool:
         """

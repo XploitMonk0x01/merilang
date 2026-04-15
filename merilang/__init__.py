@@ -14,7 +14,13 @@ __author__  = "Merilang Community"
 # ---------------------------------------------------------------------------
 from .lexer_enhanced     import tokenize, tokenize_safe, Token
 from .parser_enhanced    import Parser
-from .interpreter_enhanced import Interpreter
+from .interpreter_enhanced import (
+    Interpreter,
+    ActivationRecord,
+    RuntimeStack,
+    RuntimeHeap,
+    HeapObject,
+)
 
 # ---------------------------------------------------------------------------
 # New compiler passes
@@ -23,6 +29,10 @@ from .symbol_table      import SymbolTable, Symbol, SymbolKind, MType
 from .semantic_analyzer import SemanticAnalyzer
 from .ir_nodes          import IRProgram
 from .ir_generator      import IRGenerator
+from .ir_analysis       import BasicBlock, ControlFlowGraph, build_basic_blocks, build_cfg
+from .ir_optimizer      import OptimizationReport, optimize_ir
+from .ir_dag            import DAGNode, optimize_ir_with_dag
+from .ir_ssa            import SSAReport, convert_to_ssa
 
 # ---------------------------------------------------------------------------
 # Error types
@@ -40,11 +50,15 @@ __all__ = [
     # Parser
     "Parser",
     # Interpreter
-    "Interpreter",
+    "Interpreter", "ActivationRecord", "RuntimeStack", "RuntimeHeap", "HeapObject",
     # Semantic analysis
     "SemanticAnalyzer", "SymbolTable", "Symbol", "SymbolKind", "MType",
     # IR
     "IRGenerator", "IRProgram",
+    "BasicBlock", "ControlFlowGraph", "build_basic_blocks", "build_cfg",
+    "OptimizationReport", "optimize_ir",
+    "DAGNode", "optimize_ir_with_dag",
+    "SSAReport", "convert_to_ssa",
     # Errors
     "MeriLangError", "LexerError", "ParserError",
     "LexerErrorCollection", "ParserErrorCollection",
